@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Sabrina Texidor</title>
+  <meta name="description" content="Get in touch with Sabrina Texidor — actor, writer, and director based in Los Angeles." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav scrolled" id="mainNav">
+    <a href="index.html" class="nav__logo">Sabrina <span>Texidor</span></a>
+    <ul class="nav__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="reel.html">Reel</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav__toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav__mobile">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="resume.html">Resume</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="reel.html">Reel</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero" style="background: linear-gradient(135deg, #111010 0%, #1a1218 100%);">
+    <div class="container">
+      <div class="page-hero__content">
+        <span class="section-label reveal">Reach Out</span>
+        <h1 class="page-hero__title reveal reveal-delay-1">Let's <em style="color:var(--gold);">Connect</em></h1>
+      </div>
+    </div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom, transparent 40%, var(--charcoal) 100%);"></div>
+  </section>
+
+  <!-- CONTACT CONTENT -->
+  <div class="contact-wrapper">
+    <div class="contact-grid">
+
+      <!-- LEFT: INFO -->
+      <div>
+        <span class="section-label reveal">Contact</span>
+        <h2 class="section-title reveal reveal-delay-1">Get in <em>Touch</em></h2>
+        <div class="divider reveal reveal-delay-2"></div>
+        <p style="font-size:0.88rem;color:var(--cream-dim);line-height:1.9;margin-top:1rem;" class="reveal reveal-delay-2">
+          For casting inquiries, collaborations, press, or general correspondence — please use the form or reach out directly through any of the channels below.
+        </p>
+
+        <div class="contact-info__links reveal reveal-delay-3">
+
+          <a href="/cdn-cgi/l/email-protection#bae9dbd8c8d3d4dbeedfc2d3ded5c8faddd7dbd3d694d9d5d7" class="contact-link">
+            <div class="contact-link__icon">✉</div>
+            <div>
+              <span class="contact-link__label">Email</span>
+              <span class="contact-link__value"><span class="__cf_email__" data-cfemail="4112202333282f2015243928252e3301262c20282d6f222e2c">[email&#160;protected]</span></span>
+            </div>
+          </a>
+
+          <a href="https://www.instagram.com/sabrinatexidor" target="_blank" rel="noopener" class="contact-link">
+            <div class="contact-link__icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </div>
+            <div>
+              <span class="contact-link__label">Instagram</span>
+              <span class="contact-link__value">@sabrinatexidor</span>
+            </div>
+          </a>
+
+          <a href="https://www.imdb.com/name/nm5938109/" target="_blank" rel="noopener" class="contact-link">
+            <div class="contact-link__icon" style="font-weight:700;font-size:0.7rem;letter-spacing:0.05em;">IMDb</div>
+            <div>
+              <span class="contact-link__label">IMDb</span>
+              <span class="contact-link__value">Sabrina Texidor on IMDb</span>
+            </div>
+          </a>
+
+        </div>
+
+        <!-- Press quote -->
+        <div class="pull-quote reveal" style="margin-top:3rem;">
+          <p>"In Sabrina we saw an energy and exuberance that shines through and is absolutely infectious."</p>
+          <cite>— Ayo Davis, SVP Talent &amp; Casting, ABC Entertainment</cite>
+        </div>
+      </div>
+
+      <!-- RIGHT: FORM -->
+      <div class="reveal reveal-delay-2">
+        <div class="contact-form">
+          <h3 style="font-family:var(--font-serif);font-size:1.8rem;color:var(--cream);margin-bottom:2rem;font-weight:400;">Send a Message</h3>
+
+          <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+            <!-- Replace YOUR_FORM_ID with your Formspree form ID for live form submissions -->
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Your name" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" placeholder="Casting inquiry, collaboration, press…" required />
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell me about your project or what's on your mind…" required></textarea>
+            </div>
+
+            <button type="submit" class="btn" style="width:100%;justify-content:center;">
+              <span>Send Message</span>
+            </button>
+          </form>
+
+          <div class="form-success">
+            <h3>Message Sent ✦</h3>
+            <p>Thank you for reaching out. I'll be in touch shortly.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Sabrina <span>Texidor</span></div>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/sabrinatexidor" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.imdb.com/name/nm5938109/" target="_blank" rel="noopener">IMDb</a>
+      <a href="/cdn-cgi/l/email-protection#481b2
