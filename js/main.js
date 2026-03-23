@@ -2,6 +2,13 @@
    SABRINA TEXIDOR — MAIN JS
    ============================================ */
 
+// Make all content visible immediately as fallback
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }, 800);
+});
+
 // ── Navigation ──
 const nav = document.querySelector('.nav');
 const navToggle = document.querySelector('.nav__toggle');
@@ -32,7 +39,6 @@ navLinks.forEach(link => {
   });
 });
 
-// Active nav link
 function setActiveNav() {
   const current = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav__links a, .nav__mobile a').forEach(link => {
@@ -46,7 +52,6 @@ setActiveNav();
 
 // ── Scroll Reveal ──
 const reveals = document.querySelectorAll('.reveal');
-
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -54,24 +59,18 @@ const observer = new IntersectionObserver((entries) => {
       observer.unobserve(entry.target);
     }
   });
-}, {
-  threshold: 0.1,
-  rootMargin: '0px 0px -40px 0px'
-});
-
+}, { threshold: 0.05 });
 reveals.forEach(el => observer.observe(el));
 
 // ── Contact Form ──
 const contactForm = document.getElementById('contactForm');
 const formSuccess = document.querySelector('.form-success');
-
 if (contactForm) {
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const btn = contactForm.querySelector('button[type="submit"]');
     btn.textContent = 'Sending...';
     btn.disabled = true;
-
     setTimeout(() => {
       contactForm.style.display = 'none';
       if (formSuccess) formSuccess.classList.add('show');
@@ -79,11 +78,10 @@ if (contactForm) {
   });
 }
 
-// ── Lightbox (Gallery) ──
+// ── Lightbox ──
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightboxImg');
 const lightboxClose = document.getElementById('lightboxClose');
-
 document.querySelectorAll('.gallery-item[data-src]').forEach(item => {
   item.addEventListener('click', () => {
     if (lightbox && lightboxImg) {
@@ -93,23 +91,9 @@ document.querySelectorAll('.gallery-item[data-src]').forEach(item => {
     }
   });
 });
-
-if (lightboxClose) {
-  lightboxClose.addEventListener('click', closeLightbox);
-}
-
-if (lightbox) {
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) closeLightbox();
-  });
-}
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && lightbox?.classList.contains('open')) {
-    closeLightbox();
-  }
-});
-
+if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+if (lightbox) lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 function closeLightbox() {
   lightbox?.classList.remove('open');
   document.body.style.overflow = '';
