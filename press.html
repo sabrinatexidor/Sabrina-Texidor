@@ -1,124 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Page not found</title>
-    <style>
-      :root {
-        --colorRgbFacetsTeal600: 2 128 125;
-        --colorTealAction: var(--colorRgbFacetsTeal600);
-        --colorRgbFacetsNeutralLight200: 233 235 237;
-        --colorHr: var(--colorRgbFacetsNeutralLight200);
-        --colorRgbFacetsNeutralLight700: 53 58 62;
-        --colorGrayDarkest: var(--colorRgbFacetsNeutralLight700);
-        --colorGrayLighter: var(--colorRgbFacetsNeutralLight200);
-        --colorText: var(--colorGrayDarkest);
-        --effectShadowLightShallow: 0 1px 10px 0 rgb(53 58 62 / 6%),
-          0 2px 4px 0 rgb(53 58 62 / 8%);
-        --colorRgbFacetsNeutralDark900: 6 11 16;
-      }
-      body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
-          "Segoe UI Emoji", "Segoe UI Symbol";
-        background: white;
-        overflow: hidden;
-        margin: 0;
-        padding: 0;
-        line-height: 1.5;
-        color: rgb(var(--colorText));
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Press — Sabrina Texidor</title>
+  <meta name="description" content="Press coverage and media mentions for actress Sabrina Texidor." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .press-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 2rem 8rem;
+    }
+    .press-quote-hero {
+      padding: 5rem 2rem;
+      background: var(--charcoal-mid);
+      border-left: 4px solid var(--gold);
+      margin-bottom: 5rem;
+      max-width: 900px;
+    }
+    .press-quote-hero p {
+      font-family: var(--font-serif);
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.5;
+    }
+    .press-quote-hero cite {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 1.5rem;
+      font-style: normal;
+    }
+    .press-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .press-card {
+      background: var(--charcoal-mid);
+      border: 1px solid rgba(255,255,255,0.05);
+      padding: 2rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .press-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: var(--transition);
+    }
+    .press-card:hover { border-color: rgba(201,168,76,0.2); transform: translateY(-3px); }
+    .press-card:hover::before { transform: scaleX(1); }
+    .press-card__outlet {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .press-card__headline {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      color: var(--cream);
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+    .press-card__excerpt {
+      font-size: 0.82rem;
+      color: var(--cream-dim);
+      line-height: 1.8;
+      opacity: 0.8;
+      margin-bottom: 1.5rem;
+    }
+    .press-card__link {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: var(--transition);
+    }
+    .press-card__link:hover { gap: 0.8rem; }
+    .press-card__date {
+      font-size: 0.65rem;
+      color: var(--cream-dim);
+      opacity: 0.4;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.1em;
+    }
+    .press-sabrina-quote {
+      background: rgba(201,168,76,0.05);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 2rem;
+      margin: 1rem 0 1.5rem;
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--cream-dim);
+      line-height: 1.7;
+    }
+    .press-mentions {
+      margin-top: 5rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+    .mentions-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .mention-pill {
+      padding: 0.6rem 1.5rem;
+      border: 1px solid rgba(201,168,76,0.25);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      transition: var(--transition);
+    }
+    .mention-pill:hover { border-color: var(--gold); color: var(--gold); }
+    @media (max-width: 768px) {
+      .press-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
 
-      @media (prefers-color-scheme: dark) {
-        body {
-          background: rgb(var(--colorRgbFacetsNeutralDark900));
-        }
-      }
+  <nav class="nav scrolled" id="mainNav">
+    <a href="index.html" class="nav__logo">Sabrina <span>Texidor</span></a>
+    <ul class="nav__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="reel.html">Reel</a></li>
+      <li><a href="press.html">Press</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav__toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
 
-      h1 {
-        margin: 0;
-        font-size: 1.375rem;
-        line-height: 1;
-      }
+  <div class="nav__mobile">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="resume.html">Resume</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="reel.html">Reel</a>
+    <a href="press.html">Press</a>
+    <a href="contact.html">Contact</a>
+  </div>
 
-      h1 + p {
-        margin-top: 8px;
-      }
-
-      .main {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        width: 100vw;
-      }
-
-      .card {
-        position: relative;
-        width: 75%;
-        max-width: 364px;
-        padding: 24px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: var(--effectShadowLightShallow);
-        border: 1px solid rgb(var(--colorGrayLighter));
-      }
-
-      a {
-        margin: 0;
-        font-weight: 600;
-        color: rgb(var(--colorTealAction));
-        text-decoration-skip-ink: all;
-        text-decoration-thickness: 1px;
-        text-underline-offset: 2px;
-        text-decoration-color: rgb(var(--colorTealAction) / 0.5);
-        transition: text-decoration-color 0.15s ease-in-out;
-      }
-
-      a:hover,
-      a:focus-visible {
-        text-decoration-color: rgb(var(--colorTealAction));
-      }
-
-      p:last-of-type {
-        margin-bottom: 0;
-      }
-
-      hr {
-        border: 0;
-        height: 1px;
-        background: rgb(var(--colorHr));
-        margin-top: 16px;
-        margin-bottom: 16px;
-      }
-
-      .your-site {
-        font-size: 0.875rem;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="main">
-      <div class="card">
-        <h1>Page not found</h1>
-        <p>
-          Looks like you’ve followed a broken link or entered a URL that doesn’t
-          exist on this site.
-        </p>
-        <hr />
-        <p class="your-site">
-          If this is your site, and you weren’t expecting a 404 for this path,
-          please visit Netlify’s
-          <a
-            href="https://answers.netlify.com/t/support-guide-i-ve-deployed-my-site-but-i-still-see-page-not-found/125?utm_source=404page&utm_campaign=community_tracking"
-            >“page not found” support guide</a
-          >
-          for troubleshooting tips.
-        </p>
+  <!-- PAGE HERO -->
+  <section class="page-hero" style="background: linear-gradient(135deg, #111010 0%, #1a1410 100%);">
+    <div class="container">
+      <div class="page-hero__content">
+        <span class="section-label">Media & Coverage</span>
+        <h1 class="page-hero__title">In the <em style="color:var(--gold);">Press</em></h1>
       </div>
     </div>
-  </body>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom, transparent 40%, var(--charcoal) 100%);"></div>
+  </section>
+
+  <div class="press-wrapper">
+
+    <!-- HERO QUOTE -->
+    <div class="press-quote-hero">
+      <p>"In Sabrina we saw an energy and exuberance that shines through and is absolutely infectious. We can't wait to see what she'll be able to accomplish as part of the ABC family."</p>
+      <cite>— Ayo Davis, SVP Talent &amp; Casting, ABC Entertainment · Deadline Hollywood, August 2017</cite>
+    </div>
+
+    <!-- PRESS GRID -->
+    <span class="section-label">Coverage</span>
+    <h2 class="section-title" style="margin-top:0.4rem;">Featured <em>Press</em></h2>
+    <div class="divider"></div>
+
+    <div class="press-grid">
+
+      <!-- Deadline -->
+      <div class="press-card">
+        <div class="press-card__outlet">Deadline Hollywood</div>
+        <div class="press-card__date">August 14, 2017</div>
+        <div class="press-card__headline">ABC Discovers: Digital Talent Competition Announces Sabrina Texidor As 2017 Winner</div>
+        <div class="press-card__excerpt">Selected from thousands of submissions across the country, Sabrina Texidor was named the U.S. winner of the first-ever ABC Discovers Digital Talent Competition — winning a one-year, $25,000 talent deal with ABC.</div>
+        <a href="https://deadline.com/2017/08/abc-discovers-digital-talent-competition-winner-sabrina-texidor-1202147671/" target="_blank" rel="noopener" class="press-card__link">Read on Deadline →</a>
+      </div>
+
+      <!-- Backstage -->
+      <div class="press-card">
+        <div class="press-card__outlet">Backstage Magazine</div>
+        <div class="press-card__date">September 2017</div>
+        <div class="press-card__headline">'ABC Discovers' Winner Sabrina Texidor Recalls Her Backstage Roots</div>
+        <div class="press-sabrina-quote">"I've been auditioning for years so I've gotten used to a lot of people saying no. I can't explain what it felt like to find out I was a finalist. And to have won — it is overwhelming on so many levels."</div>
+        <a href="https://www.backstage.com/magazine/article/abc-discovers-winner-sabrina-texidor-recalls-backstage-roots-3595/" target="_blank" rel="noopener" class="press-card__link">Read on Backstage →</a>
+      </div>
+
+      <!-- WTNH -->
+      <div class="press-card">
+        <div class="press-card__outlet">WTNH News 8 · Connecticut</div>
+        <div class="press-card__date">August 2017</div>
+        <div class="press-card__headline">West Hartford Actress Named Winner of ABC's National Talent Competition</div>
+        <div class="press-card__excerpt">Connecticut's own WTNH News 8 covered Sabrina's historic win, celebrating the West Hartford native's breakthrough moment on a national stage.</div>
+        <a href="https://www.facebook.com/WTNH8/posts/10154651158335736/" target="_blank" rel="noopener" class="press-card__link">View Coverage →</a>
+      </div>
+
+      <!-- BroadwayWorld -->
+      <div class="press-card">
+        <div class="press-card__outlet">BroadwayWorld</div>
+        <div class="press-card__date">August 14, 2017</div>
+        <div class="press-card__headline">ABC Talent &amp; Casting Announce Winner of 2017 Digital Talent Competition</div>
+        <div class="press-card__excerpt">BroadwayWorld reported on Sabrina's win, noting she received the news while celebrating her birthday on safari in South Africa — making it the ultimate birthday surprise.</div>
+        <a href="https://www.broadwayworld.com/bwwtv/article/ABC-Talent-Casting-Announce-Winner-of-2017-Digital-Talent-Competition-20170814" target="_blank" rel="noopener" class="press-card__link">Read on BroadwayWorld →</a>
+      </div>
+
+      <!-- TVWeek -->
+      <div class="press-card">
+        <div class="press-card__outlet">TV Week</div>
+        <div class="press-card__date">August 2017</div>
+        <div class="press-card__headline">ABC Talent and Casting Announces the 2017 ABC Discovers U.S. Winner</div>
+        <div class="press-card__excerpt">TV Week covered the announcement, highlighting Sabrina as the standout performer selected from actors across the United States in the landmark competition.</div>
+        <a href="https://www.tvweek.com/in-depth/2017/08/abc-talent-and-casting-announces-the-2017-abc-discovers-digital-talent-competition-u-s-winner/" target="_blank" rel="noopener" class="press-card__link">Read on TV Week →</a>
+      </div>
+
+      <!-- Grand Hotel Wiki / Fan Coverage -->
+      <div class="press-card">
+        <div class="press-card__outlet">ABC · Grand Hotel</div>
+        <div class="press-card__date">2019</div>
+        <div class="press-card__headline">Recurring Role as Marisa on ABC's Grand Hotel</div>
+        <div class="press-card__excerpt">Sabrina joined the cast of ABC's Grand Hotel as Marisa — a recurring guest star role on the network primetime drama series, following her ABC Discovers win.</div>
+        <a href="https://www.imdb.com/name/nm5938109/" target="_blank" rel="noopener" class="press-card__link">View on IMDb →</a>
+      </div>
+
+    </div>
+
+    <!-- ALSO MENTIONED IN -->
+    <div class="press-mentions">
+      <span class="section-label">Also Featured In</span>
+      <h3 class="section-title" style="font-size:2rem;margin-top:0.4rem;">More <em>Coverage</em></h3>
+      <div class="mentions-grid">
+        <a href="https://deadline.com/2017/08/abc-discovers-digital-talent-competition-winner-sabrina-texidor-1202147671/" target="_blank" rel="noopener" class="mention-pill">Deadline Hollywood</a>
+        <a href="https://www.backstage.com/magazine/article/abc-discovers-winner-sabrina-texidor-recalls-backstage-roots-3595/" target="_blank" rel="noopener" class="mention-pill">Backstage Magazine</a>
+        <a href="https://www.tvguide.com/celebrities/sabrina-texidor/3000808913/" target="_blank" rel="noopener" class="mention-pill">TV Guide</a>
+        <a href="https://www.rottentomatoes.com/celebrity/sabrina_texidor" target="_blank" rel="noopener" class="mention-pill">Rotten Tomatoes</a>
+        <a href="https://www.broadwayworld.com/bwwtv/article/ABC-Talent-Casting-Announce-Winner-of-2017-Digital-Talent-Competition-20170814" target="_blank" rel="noopener" class="mention-pill">BroadwayWorld</a>
+        <a href="https://www.tvweek.com/in-depth/2017/08/abc-talent-and-casting-announces-the-2017-abc-discovers-digital-talent-competition-u-s-winner/" target="_blank" rel="noopener" class="mention-pill">TV Week</a>
+        <a href="https://lezwatchtv.com/actor/sabrina-texidor/" target="_blank" rel="noopener" class="mention-pill">LezWatch.TV</a>
+        <a href="https://www.imdb.com/name/nm5938109/" target="_blank" rel="noopener" class="mention-pill">IMDb</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-logo">Sabrina <span>Texidor</span></div>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/sabrinatexidor" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.imdb.com/name/nm5938109/" target="_blank" rel="noopener">IMDb</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <p>Actor · Writer · Director · Los Angeles, CA</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
 </html>
