@@ -78,7 +78,54 @@ if (contactForm) {
   });
 }
 
-// ── Lightbox ──
+// ── Cursor Glow ──
+const cursorGlow = document.getElementById('cursorGlow');
+if (cursorGlow) {
+  document.addEventListener('mousemove', (e) => {
+    cursorGlow.style.left = e.clientX + 'px';
+    cursorGlow.style.top = e.clientY + 'px';
+    cursorGlow.style.opacity = '1';
+  });
+  document.addEventListener('mouseleave', () => {
+    cursorGlow.style.opacity = '0';
+  });
+}
+
+// ── Parallax Hero ──
+const heroBgImg = document.querySelector('.hero__bg-img');
+if (heroBgImg) {
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    heroBgImg.style.transform = `scale(1.08) translateY(${scrollY * 0.25}px)`;
+  }, { passive: true });
+}
+
+// ── Animated Stats Counter ──
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const duration = 1800;
+  const start = performance.now();
+  const update = (now) => {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(eased * target).toLocaleString();
+    if (progress < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+
+const statObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const numEl = entry.target.querySelector('.stat-number');
+      if (numEl) animateCounter(numEl);
+      statObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.stat-item').forEach(el => statObserver.observe(el));
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightboxImg');
 const lightboxClose = document.getElementById('lightboxClose');
