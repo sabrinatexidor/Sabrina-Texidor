@@ -1501,3 +1501,4 @@ footer p {
 .hero__quote { animation: fadeSlideUp 1s cubic-bezier(0.4,0,0.2,1) 0.8s forwards; opacity: 0; }
 .hero__cta { animation: fadeSlideUp 1s cubic-bezier(0.4,0,0.2,1) 1s forwards; opacity: 0; }
 @keyframes fadeSlideUp { from { opacity:0; transform:translateY(40px); } to { opacity:1; transform:translateY(0); } }
+.stats-section { overflow: hidden; width: 100%; } .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; } .ticker-wrap { display: none; } .gallery-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; } .gallery-grid .gallery-item { aspect-ratio: 3/4; }
