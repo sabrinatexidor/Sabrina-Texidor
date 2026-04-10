@@ -1502,3 +1502,27 @@ footer p {
 .hero__cta { animation: fadeSlideUp 1s cubic-bezier(0.4,0,0.2,1) 1s forwards; opacity: 0; }
 @keyframes fadeSlideUp { from { opacity:0; transform:translateY(40px); } to { opacity:1; transform:translateY(0); } }
 .stats-section { overflow: hidden; width: 100%; } .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; } .ticker-wrap { display: none; } .gallery-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; } .gallery-grid .gallery-item { aspect-ratio: 3/4; }
+
+/* ── FILMSTRIP ── */
+.filmstrip-wrap {
+  position: absolute;
+  top: -15%;
+  left: -4%;
+  width: 130px;
+  height: 135%;
+  transform: rotate(-11deg);
+  transform-origin: top left;
+  overflow: hidden;
+  z-index: 3;
+  box-shadow: 6px 0 50px rgba(0,0,0,0.5);
+}
+.strip-bg { position: absolute; inset: 0; background: #111; }
+.sprockets { position: absolute; top: 0; bottom: 0; width: 16px; display: flex; flex-direction: column; align-items: center; padding: 6px 0; z-index: 5; }
+.sprockets.left { left: 0; }
+.sprockets.right { right: 0; }
+.hole { flex-shrink: 0; width: 8px; height: 12px; background: #1c1c1c; border-radius: 2px; margin: 7px 0; opacity: 0.9; }
+.strip-track { position: absolute; top: 0; left: 16px; right: 16px; display: flex; flex-direction: column; animation: stripScroll 9s linear infinite; will-change: transform; z-index: 4; }
+@keyframes stripScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+.filmstrip-wrap .frame { flex-shrink: 0; width: 100%; height: 110px; margin: 3px 0; overflow: hidden; position: relative; background: #2a2a2a; }
+.filmstrip-wrap .frame img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.filmstrip-wrap::after { content: ''; position: absolute; top: 0; bottom: 0; right: 0; width: 1px; background: linear-gradient(to bottom, transparent, rgba(184,149,42,0.4), transparent); z-index: 6; }

@@ -145,3 +145,15 @@ function closeLightbox() {
   lightbox?.classList.remove('open');
   document.body.style.overflow = '';
 }
+
+// Filmstrip sprocket holes
+['sl','sr'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) {
+    for (let i = 0; i < 80; i++) {
+      const h = document.createElement('div');
+      h.className = 'hole';
+      el.appendChild(h);
+    }
+  }
+});
