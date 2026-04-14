@@ -149,10 +149,11 @@ h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 400; line-height: 
 }
 
 .nav__logo {
-  font-family: var(--font-serif);
-  font-size: 1.4rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-style: italic;
+  letter-spacing: 0.1em;
+  font-weight: 400;
   color: var(--cream);
   flex-shrink: 0;
 }
