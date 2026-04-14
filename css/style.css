@@ -412,6 +412,8 @@ footer p {
   margin: 0 auto;
   padding: 0 2.5rem;
   width: 100%;
+  text-align: center;
+  align-items: center;
 }
 
 .hero__eyebrow {
@@ -442,6 +444,8 @@ footer p {
   line-height: 0.95;
   color: var(--cream);
   margin-bottom: 1.5rem;
+  white-space: nowrap;
+  text-align: center;
 }
 
 .hero__name em {
