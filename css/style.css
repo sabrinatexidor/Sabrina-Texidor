@@ -453,7 +453,35 @@ footer p {
 
 .hero__name em {
   font-style: italic;
-  color: var(--gold-light);
+  position: relative;
+  display: inline-block;
+  color: #b8952a;
+}
+
+.hero__name em::after {
+  content: 'Texidor';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255, 223, 80, 0.95) 40%,
+    rgba(255, 245, 150, 1) 50%,
+    rgba(255, 223, 80, 0.95) 60%,
+    transparent 80%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: goldSparkle 2.5s ease-in-out infinite;
+}
+
+@keyframes goldSparkle {
+  0%   { background-position: -200% center; opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { background-position: 200% center; opacity: 0; }
 }
 
 .hero__tagline {
