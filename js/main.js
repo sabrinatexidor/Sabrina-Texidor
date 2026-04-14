@@ -2,12 +2,6 @@
    SABRINA TEXIDOR — MAIN JS
    ============================================ */
 
-// Make all content visible immediately as fallback
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-  }, 800);
-});
 
 // ── Navigation ──
 const nav = document.querySelector('.nav');
@@ -59,7 +53,7 @@ const observer = new IntersectionObserver((entries) => {
       observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.05 });
+}, { threshold: 0.15 });
 reveals.forEach(el => observer.observe(el));
 
 // ── Contact Form ──
