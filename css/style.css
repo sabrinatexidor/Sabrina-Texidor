@@ -448,6 +448,7 @@ footer p {
   margin-bottom: 1.5rem;
   white-space: nowrap;
   text-align: center;
+  animation: nameSlideIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .hero__name em {
@@ -1544,4 +1545,9 @@ footer p {
   align-items: center;
   gap: 1rem;
   border-top: 1px solid rgba(184,149,42,0.15);
+}
+
+@keyframes nameSlideIn {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
