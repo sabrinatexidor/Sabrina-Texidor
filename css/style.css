@@ -419,6 +419,8 @@ footer p {
 .hero__eyebrow {
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
@@ -498,6 +500,7 @@ footer p {
   display: flex;
   gap: 1.2rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .hero__scroll {
