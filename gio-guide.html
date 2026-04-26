@@ -74,10 +74,28 @@
   .res-url a{color:var(--teal-mid);}
   .footer{text-align:center;font-size:12px;color:var(--muted-light);font-style:italic;padding-top:20px;border-top:1px solid var(--border);}
   @media(max-width:500px){h1{font-size:48px;}.col-hdr{display:none;}.opt-meta{grid-template-columns:1fr;}}
+
+  /* TABLE OF CONTENTS */
+  .toc{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--teal);padding:20px 22px;margin-bottom:28px;border-radius:1px;}
+  .toc-title{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;}
+  .toc-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);text-decoration:none;color:var(--text);}
+  .toc-item:last-child{border-bottom:none;}
+  .toc-num{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--teal);min-width:22px;line-height:1;}
+  .toc-text{flex:1;}
+  .toc-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--navy);line-height:1.2;transition:color .15s;}
+  .toc-item:hover .toc-name{color:var(--teal);}
+  .toc-subdesc{font-size:12px;color:var(--muted);margin-top:2px;}
+  .toc-arrow{font-size:13px;color:var(--teal-mid);}
+
+  /* NAV BUTTONS */
+  .cat-nav{display:flex;justify-content:space-between;align-items:center;padding:10px 2px;margin-top:6px;margin-bottom:20px;gap:10px;}
+  .nav-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--teal);text-decoration:none;padding:7px 14px;border:1px solid var(--teal-border);border-radius:20px;background:var(--white);transition:background .15s,color .15s;white-space:nowrap;}
+  .nav-btn:hover{background:var(--teal);color:white;border-color:var(--teal);}
+  .nav-btn.solo{margin-left:auto;}
 </style>
 </head>
 <body>
-<div class="page">
+<div class="page" id="top">
 
   <div class="header">
     <h1>Seizure Safety &amp; Support</h1>
@@ -98,8 +116,53 @@
     <div class="snap"><span class="snap-label">History</span><span class="snap-value">Since childhood, on medication</span></div>
   </div>
 
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">Jump to a Section</div>
+    <a href="#cat1" class="toc-item">
+      <span class="toc-num">1</span>
+      <span class="toc-text">
+        <div class="toc-name">Safety &amp; Monitoring</div>
+        <div class="toc-subdesc">Devices that protect Gio and alert the family</div>
+      </span>
+      <span class="toc-arrow">→</span>
+    </a>
+    <a href="#cat2" class="toc-item">
+      <span class="toc-num">2</span>
+      <span class="toc-text">
+        <div class="toc-name">Medical Interventions</div>
+        <div class="toc-subdesc">FDA-approved treatments for drug-resistant epilepsy</div>
+      </span>
+      <span class="toc-arrow">→</span>
+    </a>
+    <a href="#cat3" class="toc-item">
+      <span class="toc-num">3</span>
+      <span class="toc-text">
+        <div class="toc-name">Specialist Epilepsy Centers</div>
+        <div class="toc-subdesc">World-class care in Connecticut and Boston</div>
+      </span>
+      <span class="toc-arrow">→</span>
+    </a>
+    <a href="#cat4" class="toc-item">
+      <span class="toc-num">4</span>
+      <span class="toc-text">
+        <div class="toc-name">Local Support &amp; Resources</div>
+        <div class="toc-subdesc">Free Connecticut-based support</div>
+      </span>
+      <span class="toc-arrow">→</span>
+    </a>
+    <a href="#cat5" class="toc-item">
+      <span class="toc-num">5</span>
+      <span class="toc-text">
+        <div class="toc-name">Long-Term</div>
+        <div class="toc-subdesc">Start the process now — life-changing options</div>
+      </span>
+      <span class="toc-arrow">→</span>
+    </a>
+  </div>
+
   <!-- CAT 1 -->
-  <div class="cat">
+  <div id="cat1" class="cat">
     <div class="cat-top"><span class="cat-num">Category 1</span><span class="cat-title">Safety &amp; <em>Monitoring</em></span></div>
     <div class="cat-desc">Devices that protect Gio and alert the family &mdash; most require no doctor or prescription</div>
   </div>
@@ -174,7 +237,8 @@
   </div>
 
   <!-- CAT 2 -->
-  <div class="cat">
+  <div class="cat-nav"><a href="#top" class="nav-btn">↑ Back to top</a><a href="#cat2" class="nav-btn">Next: Medical Interventions →</a></div>
+  <div id="cat2" class="cat">
     <div class="cat-top"><span class="cat-num">Category 2</span><span class="cat-title">Medical <em>Interventions</em></span></div>
     <div class="cat-desc">FDA-approved treatments for drug-resistant epilepsy &mdash; discuss with his neurologist</div>
   </div>
@@ -224,7 +288,8 @@
   </div>
 
   <!-- CAT 3 -->
-  <div class="cat">
+  <div class="cat-nav"><a href="#top" class="nav-btn">↑ Back to top</a><a href="#cat3" class="nav-btn">Next: Specialist Centers →</a></div>
+  <div id="cat3" class="cat">
     <div class="cat-top"><span class="cat-num">Category 3</span><span class="cat-title">Specialist Epilepsy <em>Centers</em></span></div>
     <div class="cat-desc">World-class care for drug-resistant epilepsy &mdash; in Connecticut and Boston</div>
   </div>
@@ -284,7 +349,8 @@
   </div>
 
   <!-- CAT 4 -->
-  <div class="cat">
+  <div class="cat-nav"><a href="#top" class="nav-btn">↑ Back to top</a><a href="#cat4" class="nav-btn">Next: Local Support →</a></div>
+  <div id="cat4" class="cat">
     <div class="cat-top"><span class="cat-num">Category 4</span><span class="cat-title">Local Support &amp; <em>Resources</em></span></div>
     <div class="cat-desc">Free Connecticut-based support &mdash; use now, in parallel with everything else</div>
   </div>
@@ -322,7 +388,8 @@
   </div>
 
   <!-- CAT 5 -->
-  <div class="cat">
+  <div class="cat-nav"><a href="#top" class="nav-btn">↑ Back to top</a><a href="#cat5" class="nav-btn">Next: Long-Term →</a></div>
+  <div id="cat5" class="cat">
     <div class="cat-top"><span class="cat-num">Category 5</span><span class="cat-title">Long-<em>Term</em></span></div>
     <div class="cat-desc">Start the process now &mdash; these take time but can be life-changing</div>
   </div>
@@ -348,6 +415,7 @@
   </div>
 
   <!-- RESOURCES -->
+  <div class="cat-nav"><a href="#top" class="nav-btn solo">↑ Back to top</a></div>
   <div class="resources">
     <div class="res-title">Key Resources at a Glance</div>
     <div class="res-item"><div class="res-name">Yale Comprehensive Epilepsy Center</div><div class="res-url"><a href="tel:+18779253637">1-877-925-3637</a> &middot; <a href="https://medicine.yale.edu/neurology" target="_blank">medicine.yale.edu/neurology</a></div></div>
