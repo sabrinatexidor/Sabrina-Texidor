@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Guide for Gio — Cuevas Family</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#1a2340;--teal:#2a7d7b;--teal-mid:#4a9d9b;--teal-pale:#e4f2f1;
+    --teal-border:#b0d4d3;--gold:#a07820;--gold-pale:#fdf6e8;--gold-border:#e8d4a0;
+    --green:#276130;--green-pale:#edf7ee;--green-border:#b8d8bc;
+    --rose:#b03020;--rose-pale:#fdf0ee;--rose-border:#f0c0bc;
+    --cream:#faf8f4;--white:#ffffff;--border:#e0d9d0;
+    --text:#1c1c2e;--muted:#6b7280;--muted-light:#9ca3af;--slate:#4b5563;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .page{max-width:680px;margin:0 auto;padding:36px 20px 60px;}
+  .header{padding-bottom:20px;border-bottom:2px solid var(--navy);margin-bottom:28px;}
+  .eyebrow{font-size:10px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+  h1{font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:300;color:var(--navy);line-height:1;}
+  h1 em{font-style:italic;color:var(--teal);}
+  .header-meta{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.8;}
+  .note{background:var(--navy);padding:24px 24px 24px 36px;border-radius:2px;margin-bottom:28px;position:relative;overflow:hidden;}
+  .note::before{content:'\201C';font-family:'Cormorant Garamond',serif;font-size:100px;color:rgba(255,255,255,.07);position:absolute;top:-18px;left:12px;line-height:1;pointer-events:none;}
+  .note p{font-size:15px;line-height:1.85;color:#c8d4e8;position:relative;z-index:1;}
+  .note strong{color:#e8f0ff;font-weight:500;}
+  .snapshot{display:flex;flex-direction:column;gap:8px;margin-bottom:36px;}
+  .snap{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--teal);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;}
+  .snap-label{font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-light);}
+  .snap-value{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--navy);}
+  .cat{background:var(--navy);border-left:5px solid var(--teal);padding:18px 20px;margin-top:36px;margin-bottom:2px;border-radius:1px;}
+  .cat-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;}
+  .cat-num{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#a8d8d7;padding:3px 10px;border:1px solid rgba(168,216,215,.25);background:rgba(168,216,215,.12);border-radius:1px;white-space:nowrap;}
+  .cat-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:white;line-height:1.1;}
+  .cat-title em{font-style:italic;color:#a8d8d7;}
+  .cat-desc{font-size:14px;color:rgba(200,216,235,.85);line-height:1.5;}
+  .col-hdr{display:grid;grid-template-columns:1fr 120px 120px;gap:0 8px;background:rgba(26,35,64,.06);border:1px solid var(--border);border-top:none;padding:8px 14px;margin-bottom:2px;}
+  .col-hdr span{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);padding-bottom:4px;border-bottom:1.5px solid var(--teal);}
+  .options{display:flex;flex-direction:column;gap:2px;margin-bottom:4px;}
+  .opt{background:var(--white);border:1px solid var(--border);border-left:3px solid transparent;}
+  .opt.first{border-left-color:var(--teal);background:#f8fffe;}
+  .opt-body{padding:18px 14px;}
+  .opt-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+  .opt-n{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:#d0c8be;line-height:1;min-width:26px;}
+  .opt.first .opt-n{color:var(--teal-mid);}
+  .opt-icon{font-size:18px;padding-top:4px;}
+  .opt-titles{flex:1;}
+  .opt-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--navy);line-height:1.2;margin-bottom:3px;}
+  .opt-tag{font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);}
+  .opt-desc{font-size:14.5px;color:var(--slate);line-height:1.75;margin-bottom:6px;}
+  .opt-list{list-style:none;margin:6px 0;padding:0;}
+  .opt-list li{font-size:14px;color:var(--slate);line-height:1.65;padding:4px 0 4px 16px;position:relative;}
+  .opt-list li::before{content:'→';position:absolute;left:0;color:var(--teal);font-size:11px;top:6px;}
+  .opt-meta{border-top:1px solid var(--border);padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .meta-label{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--navy);border-bottom:1.5px solid var(--navy);padding-bottom:3px;margin-bottom:6px;display:block;}
+  .badges{display:flex;flex-wrap:wrap;gap:5px;}
+  .badge{display:inline-block;font-size:12px;font-weight:400;padding:4px 9px;border-radius:2px;line-height:1.4;}
+  .b-gold{background:var(--gold-pale);color:var(--gold);border:1px solid var(--gold-border);}
+  .b-teal{background:var(--teal-pale);color:var(--teal);border:1px solid var(--teal-border);}
+  .b-green{background:var(--green-pale);color:var(--green);border:1px solid var(--green-border);}
+  .b-rose{background:var(--rose-pale);color:var(--rose);border:1px solid var(--rose-border);font-weight:600;}
+  .b-muted{background:#f8f8f8;color:#9ca3af;border:1px solid #e8e8e8;}
+  a{color:var(--teal);text-decoration:none;font-weight:500;}
+  a:hover{text-decoration:underline;}
+  a.phone{color:var(--navy);}
+  .resources{background:var(--navy);padding:30px 24px;border-radius:1px;margin-top:36px;margin-bottom:32px;}
+  .res-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:white;margin-bottom:20px;}
+  .res-item{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+  .res-item:last-child{border-bottom:none;}
+  .res-name{font-size:14px;color:#d4dff0;margin-bottom:3px;}
+  .res-url{font-size:13px;}
+  .res-url a{color:var(--teal-mid);}
+  .footer{text-align:center;font-size:12px;color:var(--muted-light);font-style:italic;padding-top:20px;border-top:1px solid var(--border);}
+  @media(max-width:500px){h1{font-size:48px;}.col-hdr{display:none;}.opt-meta{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="eyebrow">Seizure Safety &amp; Support</div>
+    <h1>For <em>Gio</em></h1>
+    <div class="header-meta">Bloomfield, Connecticut &nbsp;&middot;&nbsp; April 26, 2026<br>With love, for the Cuevas family</div>
+  </div>
+
+  <div class="note">
+    <p>To the Cuevas family &mdash; I love you all so much and I&rsquo;m sending you love today. You work so hard to keep Gio safe and I want to support you however I can. Below are suggestions that include <strong>monitoring devices</strong> so you can rest assured that when he&rsquo;s alone he will be safe, <strong>FDA-approved medical treatments</strong> worth exploring with his neurologist, and <strong>local resources</strong> to support the whole family. Together, we can keep Gio safe.</p>
+  </div>
+
+  <div class="snapshot">
+    <div class="snap"><span class="snap-label">Most Recent Seizure</span><span class="snap-value">April 25, 2026</span></div>
+    <div class="snap"><span class="snap-label">Previous Seizure</span><span class="snap-value">March 10, 2026</span></div>
+    <div class="snap"><span class="snap-label">History</span><span class="snap-value">Since childhood, on medication</span></div>
+  </div>
+
+  <!-- CAT 1 -->
+  <div class="cat">
+    <div class="cat-top"><span class="cat-num">Category 1</span><span class="cat-title">Safety &amp; <em>Monitoring</em></span></div>
+    <div class="cat-desc">Devices that protect Gio and alert the family &mdash; most require no doctor or prescription</div>
+  </div>
+  <div class="col-hdr"><span>Option</span><span>Cost</span><span>Insurance</span></div>
+  <div class="options">
+
+    <div class="opt first">
+      <div class="opt-body">
+        <div class="opt-header"><div class="opt-n">1</div><div class="opt-icon">🆘</div><div class="opt-titles"><div class="opt-title">Medical Alert Wearable Button</div><div class="opt-tag">Do This First &mdash; This Week</div></div></div>
+        <div class="opt-desc">Wearable button or watch he presses when he feels a seizure coming. Alerts family instantly with GPS. Includes automatic fall detection.</div>
+        <div class="opt-desc"><strong>Options:</strong> <a href="https://www.lifestation.com" target="_blank">LifeStation</a>, <a href="https://www.medicalguardian.com" target="_blank">Medical Guardian</a>, <a href="https://www.bayalarmmedicalalert.com" target="_blank">Bay Alarm Medical</a></div>
+      </div>
+      <div class="opt-meta">
+        <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-gold">~$25&ndash;$40/month</span><span class="badge b-rose">Start immediately</span></div></div>
+        <div><span class="meta-label">Insurance</span><div class="badges"><span class="badge b-teal">May be covered with doctor&rsquo;s letter</span></div></div>
+      </div>
+    </div>
+
+    <div class="opt">
+      <div class="opt-body">
+        <div class="opt-header"><div class="opt-n">2</div><div class="opt-icon">⌚</div><div class="opt-titles"><div class="opt-title">EpiMonitor Smartwatch by Empatica</div><div class="opt-tag">FDA-Cleared &mdash; Auto-Detects &amp; Alerts Family</div></div></div>
+        <div class="opt-desc">Automatically detects convulsive seizures and calls/texts family with location. No button needed. Requires prescription. If denied, <a href="https://www.dannydid.org" target="_blank">Danny Did Foundation</a> can assist.</div>
+        <div class="opt-desc"><strong>Where:</strong> <a href="https://www.empatica.com/epimonitor" target="_blank">empatica.com</a></div>
+      </div>
+      <div class="opt-meta">
+        <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-gold">~$300&ndash;$400 + subscription</span></div></div>
+        <div><span class="meta-label">Insurance</span><div class="badges"><span class="badge b-teal">Submit predetermination form</span><span class="badge b-teal">FSA/HSA eligible</span></div></div>
+      </div>
+    </div>
+
+    <div class="opt">
+      <div class="opt-body">
+        <div class="opt-header"><div class="opt-n">3</div><div class="opt-icon">🍎</div><div class="opt-titles"><div class="opt-title">EpiWatch on Apple Watch</div><div class="opt-tag">FDA-Cleared &mdash; Near-Free If He Has an Apple Watch</div></div></div>
+        <div class="opt-desc">Johns Hopkins Medicine app. Detects seizures, alerts contacts, tracks meds and triggers. Near-free if he already has an Apple Watch.</div>
+        <div class="opt-desc"><strong>Where:</strong> <a href="https://epiwatch.com" target="_blank">epiwatch.com</a> or search &ldquo;EpiWatch&rdquo; on Apple Watch App Store</div>
+      </div>
+      <div class="opt-meta">
+        <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-green">Near-free with Apple Watch</span><span class="badge b-gold">Apple Watch ~$250+ if needed</span></div></div>
+        <div><span class="meta-label">Insurance</span><div class="badges"><span class="badge b-teal">FSA/HSA eligible</span></div></div>
+      </div>
+    </div>
+
+    <div class="opt">
+      <div class="opt-body">
+        <div class="opt-header"><div class="opt-n">4</div><div class="opt-icon">🛏️</div><div class="opt-titles"><div class="opt-title">Nighttime Sleep Monitor</div><div class="opt-tag">No Wearable &mdash; Detects Seizures During Sleep</div></div></div>
+        <div class="opt-desc">Purpose-built devices that detect seizure movements during sleep and alert family automatically. No prescription needed. Four options:</div>
+        <ul class="opt-list">
+          <li><strong>Emfit Movement Monitor</strong> &mdash; $625, under-mattress, gold standard &middot; <a href="https://epiusa.myshopify.com/products/movement-monitor" target="_blank">epiusa.myshopify.com</a></li>
+          <li><strong>Medpage MP5v2</strong> &mdash; under-mattress, less expensive, pagers + 12hr battery backup &middot; <a href="https://www.medpage-ltd.com" target="_blank">medpage-ltd.com</a></li>
+          <li><strong>SAMi-3</strong> &mdash; camera facing the bed, up to 4 family members monitor remotely &middot; <a href="https://www.samialert.com" target="_blank">samialert.com</a></li>
+          <li><strong>NightWatch+</strong> &mdash; wrist sensor, 96% sensitivity for tonic-clonic seizures in adults &middot; <a href="https://nightwatchepilepsy.com" target="_blank">nightwatchepilepsy.com</a></li>
+        </ul>
+      </div>
+      <div class="opt-meta">
+        <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-gold">$200&ndash;$625 depending on device</span><span class="badge b-green">No subscription (most models)</span></div></div>
+        <div><span class="meta-label">Insurance</span><div class="badges"><span class="badge b-teal">FSA/HSA eligible</span><span class="badge b-muted">Not typically covered</span></div></div>
+      </div>
+    </div>
+
+    <div class="opt">
+      <div class="opt-body">
+        <div class="opt-header"><div class="opt-n">5</div><div class="opt-icon">🆔</div><div class="opt-titles"><div class="opt-title">Medical ID Bracelet</div><div class="opt-tag">Essential for When He&rsquo;s Out in the World</div></div></div>
+        <div class="opt-desc">Tells first responders he has epilepsy when he can&rsquo;t speak. CT Epilepsy Advocate Foundation will pay for his bracelet and create a full emergency ICE profile.</div>
+        <div class="opt-desc"><strong>Contact:</strong> <a href="https://ct-ea.org" target="_blank">ct-ea.org</a> &middot; <a href="tel:+12038748731" class="phone">(203) 874-8731</a></div>
+      </div>
+      <div class="opt-meta">
+        <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-green">Free through CT Epilepsy Advocate</span><span class="badge b-gold">~$30&ndash;$60 independently</span></div></div>
+        <div><span class="meta-label">Insurance</span><div class="badges"><span class="badge b-muted">Not applicable</span></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CAT 2 -->
+  <div class="cat">
+    <div class="cat-top"><span class="cat-num">Category 2</span><span class="cat-title">Medical <em>Interventions</em></span></div>
+    <div class="cat-desc">FDA-approved treatments for drug-resistant epilepsy &mdash; discuss with his neurologist</div>
+  </div>
+  <div class="col-hdr"><span>Option</span><span>Cost</span><span>Insurance</span></div>
+  <div class="options">
+
+    <div class="opt first">
+      <div class="opt-body">
+        <div class="opt-header"><div class="opt-n">1</div><div class="opt-icon">⚡</div><div class="opt-titles"><div class="opt-title">Neurostimulation &mdash; VNS, RNS &amp; DBS</div><div class="opt-tag">Three FDA-Approved Implants &mdash; Not Traditional Brain Surgery</div></div></div>
+        <div class="opt-desc">Three implanted devices approved when seizures don&rsquo;t respond to medication. Yale and MGH perform all three:</div>
+        <ul class="opt-list">
+          <li><strong>VNS</strong> &mdash; chest implant, pulses to brain via vagus nerve. ~50% see meaningful reduction. Newer models auto-respond to incoming seizures.</li>
+          <li><strong>RNS (NeuroPace)</strong> &mdash; &ldquo;smart&rdquo; implant reads brain in real time and stops seizures before they start. Up to 82% reduction at 6 years.</li>
+          <li><strong>DBS</strong> &mdash; thalamus electrodes deliver continuous stimulation to reduce seizure activity.</li>
+        </ul>
+      </div>
+      <div class="opt-meta">
+        <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-gold">Surgical &mdash; varies</span></div></div>
+        <div><span class="meta-label">Insurance</span><div class="badges"><span class="badge b-teal">Medicare &amp; most private insurance cover VNS &amp; RNS</span></div></div>
+      </div>
+    </div>
+
+    <div class="opt">
+      <div class="opt-body">
+        <div class="opt-header"><div class="opt-n">2</div><div class="opt-icon">🥑</div><div class="opt-titles"><div class="opt-title">Ketogenic Diet Therapy</div><div class="opt-tag">100 Years of Evidence &mdash; A Supervised Medical Therapy</div></div></div>
+        <div class="opt-desc">High-fat, low-carb diet that changes how the brain uses fuel. Over 50% of people see 50%+ seizure reduction. Requires a neurologist and dietitian &mdash; not a DIY approach.</div>
+        <div class="opt-desc"><strong>Where:</strong> <a href="https://medicine.yale.edu/neurology/epilepsy" target="_blank">Yale</a> and <a href="https://www.childrenshospital.org" target="_blank">Boston Children&rsquo;s Hospital</a> have dedicated adult keto epilepsy programs.</div>
+      </div>
+      <div class="opt-meta">
+        <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-gold">Dietitian visits vary</span></div></div>
+        <div><span class="meta-label">Insurance</span><div class="badges"><span class="badge b-teal">Medically supervised nutrition often covered</span></div></div>
+      </div>
+    </div>
+
+    <div class="opt">
+      <div class="opt-body">
+        <div class="opt-header"><div class="opt-n">3</div><div class="opt-icon">🧬</div><div class="opt-titles"><div class="opt-title">Genetic Testing</div><div class="opt-tag">Could Be the Missing Piece</div></div></div>
+        <div class="opt-desc">Some epilepsy types respond only to one specific medication. Given Gio&rsquo;s history, a genetic cause is worth ruling out. Testing can point directly to the right treatment.</div>
+        <div class="opt-desc"><strong>Where:</strong> Yale and MGH both offer comprehensive epilepsy genetic testing &mdash; ask his neurologist.</div>
+      </div>
+      <div class="opt-meta">
+        <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-gold">Varies &mdash; ordered by neurologist</span></div></div>
+        <div><span class="meta-label">Insurance</span><div class="badges"><span class="badge b-teal">Often covered when medically indicated</span></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CAT 3 -->
+  <div class="cat">
+    <div class="cat-top"><span class="cat-num">Category 3</span><span class="cat-title">Specialist Epilepsy <em>Centers</em></span></div>
+    <div class="cat-desc">World-class care for drug-resistant epilepsy &mdash; in Connecticut and Boston</div>
+  </div>
+  <div class="col-hdr"><span>Option</span><span>Cost</span><span>Insurance</span></div>
+  <div class="options">
+
+    <div class="opt first">
+      <div class="opt-body">
+        <div class="opt-header"><div class="opt-n">1</div><div class="opt-icon">🏛️</div><div class="opt-titles"><div class="opt-title">Yale Comprehensive Epilepsy Center</div><div class="opt-tag">New Haven, CT &mdash; ~45 Min from Bloomfield</div></div></div>
+        <div class="opt-desc">One of the most advanced epilepsy centers in the country. Specializes in drug-resistant epilepsy. Performs VNS, RNS, DBS, and surgery. Typically seen within a week.</div>
+        <div class="opt-desc"><strong>Dr. Lawrence J. Hirsch, MD</strong> &mdash; Chief of Epilepsy &amp; EEG, Co-Director. Patient: <em>&ldquo;After seeing the &lsquo;best&rsquo; doctors, Dr. Hirsch finally got my seizures under control.&rdquo;</em></div>
+        <div class="opt-desc"><strong>Appointment:</strong> <a href="tel:+18779253637" class="phone">1-877-925-3637</a> &middot; <a href="https://medicine.yale.edu/neurology/epilepsy" target="_blank">medicine.yale.edu/neurology</a></div>
+      </div>
+      <div class="opt-meta">
+        <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-gold">Varies by visit</span></div></div>
+        <div><span class="meta-label">Insurance</span><div class="badges"><span class="badge b-teal">Accepts most major insurance</span></div></div>
+      </div>
+    </div>
+
+    <div class="opt">
+      <div class="opt-body">
+        <div class="opt-header"><div class="opt-n">2</div><div class="opt-icon">🏥</div><div class="opt-titles"><div class="opt-title">Massachusetts General Hospital</div><div class="opt-tag">Boston, MA &mdash; ~2 Hours Away &mdash; Level 4 Center</div></div></div>
+        <div class="opt-desc">Highest-certified epilepsy center in the country. Offers <strong>online second opinions</strong> &mdash; no travel needed.</div>
+        <div class="opt-desc"><strong>Dr. Andrew J. Cole, MD</strong> &mdash; Founded the MGH Epilepsy Service. Led the world&rsquo;s first RNS thalamus implant. Harvard Medical School Professor.</div>
+        <div class="opt-desc"><strong>Online second opinions:</strong> <a href="https://www.massgeneral.org/neurology" target="_blank">massgeneral.org/neurology</a></div>
+      </div>
+      <div class="opt-meta">
+        <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-gold">Varies &mdash; online option available</span></div></div>
+        <div><span class="meta-label">Insurance</span><div class="badges"><span class="badge b-teal">Accepts most major insurance</span></div></div>
+      </div>
+    </div>
+
+    <div class="opt">
+      <div class="opt-body">
+        <div class="opt-header"><div class="opt-n">3</div><div class="opt-icon">📍</div><div class="opt-titles"><div class="opt-title">Hartford HealthCare Ayer Neuroscience</div><div class="opt-tag">Hartford, CT &mdash; ~15 Min from Bloomfield</div></div></div>
+        <div class="opt-desc">The closest specialist epilepsy center. A great starting point for VNS, RNS, genetic testing, or a referral to Yale or MGH.</div>
+        <div class="opt-desc"><strong>Dr. Gabriel Martz, MD</strong> &middot; <a href="tel:+18609723621" class="phone">(860) 972-3621</a> &middot; <a href="https://maps.google.com/?q=85+Seymour+St+Hartford+CT" target="_blank">85 Seymour St, Hartford, CT</a></div>
+      </div>
+      <div class="opt-meta">
+        <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-gold">Varies by visit</span></div></div>
+        <div><span class="meta-label">Insurance</span><div class="badges"><span class="badge b-teal">Accepts most major insurance</span></div></div>
+      </div>
+    </div>
+
+    <div class="opt">
+      <div class="opt-body">
+        <div class="opt-header"><div class="opt-n">4</div><div class="opt-icon">🔬</div><div class="opt-titles"><div class="opt-title">Clinical Trials</div><div class="opt-tag">Cutting-Edge Treatments &mdash; Often Free to Enroll</div></div></div>
+        <div class="opt-desc">Yale and MGH run active trials for drug-resistant epilepsy. Access to treatments years before they&rsquo;re widely available.</div>
+        <div class="opt-desc"><strong>Search:</strong> <a href="https://clinicaltrials.gov/search?cond=epilepsy&amp;locStr=Connecticut" target="_blank">clinicaltrials.gov</a> &mdash; &ldquo;epilepsy Connecticut&rdquo;</div>
+      </div>
+      <div class="opt-meta">
+        <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-green">Often free &mdash; may include compensation</span></div></div>
+        <div><span class="meta-label">Insurance</span><div class="badges"><span class="badge b-teal">Trial costs covered by the study</span></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CAT 4 -->
+  <div class="cat">
+    <div class="cat-top"><span class="cat-num">Category 4</span><span class="cat-title">Local Support &amp; <em>Resources</em></span></div>
+    <div class="cat-desc">Free Connecticut-based support &mdash; use now, in parallel with everything else</div>
+  </div>
+  <div class="col-hdr"><span>Option</span><span>Cost</span><span>Insurance</span></div>
+  <div class="options">
+
+    <div class="opt first">
+      <div class="opt-body">
+        <div class="opt-header"><div class="opt-n">1</div><div class="opt-icon">🤝</div><div class="opt-titles"><div class="opt-title">Epilepsy Foundation of Connecticut</div><div class="opt-tag">Serves Hartford County Including Bloomfield</div></div></div>
+        <ul class="opt-list">
+          <li><strong>Financial assistance</strong> (Halyn Murtha Fund) &mdash; devices, medications, and care</li>
+          <li><strong>Free Seizure First Aid training</strong> for the whole family &mdash; held virtually</li>
+          <li><strong>Specialist referrals</strong> and support groups</li>
+        </ul>
+        <div class="opt-desc" style="margin-top:8px;"><strong>Website:</strong> <a href="https://epilepsyct.com" target="_blank">epilepsyct.com</a></div>
+      </div>
+      <div class="opt-meta">
+        <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-green">Free</span></div></div>
+        <div><span class="meta-label">Insurance</span><div class="badges"><span class="badge b-green">Has its own financial assistance fund</span></div></div>
+      </div>
+    </div>
+
+    <div class="opt">
+      <div class="opt-body">
+        <div class="opt-header"><div class="opt-n">2</div><div class="opt-icon">📞</div><div class="opt-titles"><div class="opt-title">CT Epilepsy Advocate Foundation</div><div class="opt-tag">Free Medical IDs, Medication Help &amp; Support Groups</div></div></div>
+        <div class="opt-desc">Pays for Gio&rsquo;s Medic Alert bracelet and emergency ICE profile. Medication assistance and support groups statewide.</div>
+        <div class="opt-desc"><strong>Contact:</strong> <a href="https://ct-ea.org" target="_blank">ct-ea.org</a> &middot; <a href="tel:+12038748731" class="phone">(203) 874-8731</a></div>
+      </div>
+      <div class="opt-meta">
+        <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-green">Free</span></div></div>
+        <div><span class="meta-label">Insurance</span><div class="badges"><span class="badge b-muted">Not applicable</span></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CAT 5 -->
+  <div class="cat">
+    <div class="cat-top"><span class="cat-num">Category 5</span><span class="cat-title">Long-<em>Term</em></span></div>
+    <div class="cat-desc">Start the process now &mdash; these take time but can be life-changing</div>
+  </div>
+  <div class="col-hdr"><span>Option</span><span>Cost</span><span>Insurance</span></div>
+  <div class="options">
+
+    <div class="opt first">
+      <div class="opt-body">
+        <div class="opt-header"><div class="opt-n">1</div><div class="opt-icon">🐾</div><div class="opt-titles"><div class="opt-title">Seizure Response Dog</div><div class="opt-tag">Waitlists Are 6&ndash;24 Months &mdash; Apply Now</div></div></div>
+        <div class="opt-desc">Trained to stay beside Gio during a seizure, activate alert devices, retrieve a phone, or find family. Some can alert before a seizure starts.</div>
+        <ul class="opt-list">
+          <li><strong>Little Angels Service Dogs</strong> &mdash; New England &middot; <a href="https://www.littleangelsservicedogs.org" target="_blank">littleangelsservicedogs.org</a></li>
+          <li><strong>Helper Hounds CT</strong> &mdash; Connecticut &middot; <a href="https://www.helperhoundsct.com" target="_blank">helperhoundsct.com</a></li>
+          <li><strong>Canines 4 Hope</strong> &mdash; pre-trained dogs placed in 3&ndash;6 months &middot; <a href="https://www.canines4hope.org" target="_blank">canines4hope.org</a></li>
+        </ul>
+      </div>
+      <div class="opt-meta">
+        <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-gold">$15K&ndash;$25K</span><span class="badge b-green">Scholarships available</span></div></div>
+        <div><span class="meta-label">Insurance</span><div class="badges"><span class="badge b-muted">Not typically covered</span><span class="badge b-green">Epilepsy Foundation CT may assist</span></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RESOURCES -->
+  <div class="resources">
+    <div class="res-title">Key Resources at a Glance</div>
+    <div class="res-item"><div class="res-name">Yale Comprehensive Epilepsy Center</div><div class="res-url"><a href="tel:+18779253637">1-877-925-3637</a> &middot; <a href="https://medicine.yale.edu/neurology/epilepsy" target="_blank">medicine.yale.edu/neurology</a></div></div>
+    <div class="res-item"><div class="res-name">MGH Epilepsy Program (Dr. Andrew Cole)</div><div class="res-url"><a href="https://www.massgeneral.org/neurology" target="_blank">massgeneral.org/neurology</a></div></div>
+    <div class="res-item"><div class="res-name">Hartford HealthCare Ayer Neuroscience</div><div class="res-url"><a href="tel:+18609723621">(860) 972-3621</a> &middot; <a href="https://maps.google.com/?q=85+Seymour+St+Hartford+CT" target="_blank">85 Seymour St, Hartford CT</a></div></div>
+    <div class="res-item"><div class="res-name">Epilepsy Foundation of Connecticut</div><div class="res-url"><a href="https://epilepsyct.com" target="_blank">epilepsyct.com</a></div></div>
+    <div class="res-item"><div class="res-name">CT Epilepsy Advocate Foundation</div><div class="res-url"><a href="https://ct-ea.org" target="_blank">ct-ea.org</a> &middot; <a href="tel:+12038748731">(203) 874-8731</a></div></div>
+    <div class="res-item"><div class="res-name">Epilepsy Foundation Helpline (24/7)</div><div class="res-url"><a href="tel:+18003321000">1-800-332-1000</a></div></div>
+    <div class="res-item"><div class="res-name">Emfit Movement Monitor</div><div class="res-url"><a href="https://epiusa.myshopify.com/products/movement-monitor" target="_blank">epiusa.myshopify.com</a></div></div>
+    <div class="res-item"><div class="res-name">EpiWatch (Apple Watch)</div><div class="res-url"><a href="https://epiwatch.com" target="_blank">epiwatch.com</a></div></div>
+    <div class="res-item"><div class="res-name">NightWatch+ Sleep Monitor</div><div class="res-url"><a href="https://nightwatchepilepsy.com" target="_blank">nightwatchepilepsy.com</a></div></div>
+    <div class="res-item"><div class="res-name">Danny Did Foundation</div><div class="res-url"><a href="https://www.dannydid.org" target="_blank">dannydid.org</a></div></div>
+    <div class="res-item"><div class="res-name">Clinical Trials Database</div><div class="res-url"><a href="https://clinicaltrials.gov" target="_blank">clinicaltrials.gov</a></div></div>
+    <div class="res-item"><div class="res-name">Little Angels Service Dogs</div><div class="res-url"><a href="https://www.littleangelsservicedogs.org" target="_blank">littleangelsservicedogs.org</a></div></div>
+  </div>
+
+  <div class="footer">Prepared with love for Gio and the Cuevas family &nbsp;&middot;&nbsp; Bloomfield, Connecticut &nbsp;&middot;&nbsp; April 2026</div>
+
+</div>
+</body>
+</html>
