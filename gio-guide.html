@@ -39,12 +39,12 @@
   .col-hdr{display:grid;grid-template-columns:1fr 120px 120px;gap:0 8px;background:rgba(26,35,64,.06);border:1px solid var(--border);border-top:none;padding:8px 14px;margin-bottom:2px;}
   .col-hdr span{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);padding-bottom:4px;border-bottom:1.5px solid var(--teal);}
   .options{display:flex;flex-direction:column;gap:2px;margin-bottom:4px;}
-  .opt{background:var(--white);border:1px solid var(--border);border-left:3px solid transparent;}
-  .opt.first{border-left-color:var(--teal);background:#f8fffe;}
+  .opt{background:var(--white);border:1px solid var(--border);border-left:3px solid transparent;transition:border-left-color 0.25s, background 0.25s;}
+  .opt.active{border-left-color:var(--teal);background:#f8fffe;}
   .opt-body{padding:18px 14px;}
   .opt-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
-  .opt-n{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:#d0c8be;line-height:1;min-width:26px;}
-  .opt.first .opt-n{color:var(--teal-mid);}
+  .opt-n{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:#d0c8be;line-height:1;min-width:26px;transition:color 0.25s;}
+  .opt.active .opt-n{color:var(--teal-mid);}
   .opt-icon{font-size:18px;padding-top:4px;}
   .opt-titles{flex:1;}
   .opt-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--navy);line-height:1.2;margin-bottom:3px;}
@@ -103,7 +103,7 @@
   <div class="col-hdr"><span>Option</span><span>Cost</span><span>Insurance</span></div>
   <div class="options">
 
-    <div class="opt first">
+    <div class="opt">
       <div class="opt-body">
         <div class="opt-header"><div class="opt-n">1</div><div class="opt-icon">🆘</div><div class="opt-titles"><div class="opt-title">Medical Alert Wearable Button</div><div class="opt-tag">Do This First &mdash; This Week</div></div></div>
         <div class="opt-desc">Wearable button or watch he presses when he feels a seizure coming. Alerts family instantly with GPS. Includes automatic fall detection.</div>
@@ -178,7 +178,7 @@
   <div class="col-hdr"><span>Option</span><span>Cost</span><span>Insurance</span></div>
   <div class="options">
 
-    <div class="opt first">
+    <div class="opt">
       <div class="opt-body">
         <div class="opt-header"><div class="opt-n">1</div><div class="opt-icon">⚡</div><div class="opt-titles"><div class="opt-title">Neurostimulation &mdash; VNS, RNS &amp; DBS</div><div class="opt-tag">Three FDA-Approved Implants &mdash; Not Traditional Brain Surgery</div></div></div>
         <div class="opt-desc">Three implanted devices approved when seizures don&rsquo;t respond to medication. Yale and MGH perform all three:</div>
@@ -198,7 +198,7 @@
       <div class="opt-body">
         <div class="opt-header"><div class="opt-n">2</div><div class="opt-icon">🥑</div><div class="opt-titles"><div class="opt-title">Ketogenic Diet Therapy</div><div class="opt-tag">100 Years of Evidence &mdash; A Supervised Medical Therapy</div></div></div>
         <div class="opt-desc">High-fat, low-carb diet that changes how the brain uses fuel. Over 50% of people see 50%+ seizure reduction. Requires a neurologist and dietitian &mdash; not a DIY approach.</div>
-        <div class="opt-desc"><strong>Where:</strong> <a href="https://medicine.yale.edu/neurology/epilepsy" target="_blank">Yale</a> and <a href="https://www.childrenshospital.org" target="_blank">Boston Children&rsquo;s Hospital</a> have dedicated adult keto epilepsy programs.</div>
+        <div class="opt-desc"><strong>Where:</strong> <a href="https://medicine.yale.edu/neurology" target="_blank">Yale</a> and <a href="https://www.childrenshospital.org" target="_blank">Boston Children&rsquo;s Hospital</a> have dedicated adult keto epilepsy programs.</div>
       </div>
       <div class="opt-meta">
         <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-gold">Dietitian visits vary</span></div></div>
@@ -228,12 +228,12 @@
   <div class="col-hdr"><span>Option</span><span>Cost</span><span>Insurance</span></div>
   <div class="options">
 
-    <div class="opt first">
+    <div class="opt">
       <div class="opt-body">
         <div class="opt-header"><div class="opt-n">1</div><div class="opt-icon">🏛️</div><div class="opt-titles"><div class="opt-title">Yale Comprehensive Epilepsy Center</div><div class="opt-tag">New Haven, CT &mdash; ~45 Min from Bloomfield</div></div></div>
         <div class="opt-desc">One of the most advanced epilepsy centers in the country. Specializes in drug-resistant epilepsy. Performs VNS, RNS, DBS, and surgery. Typically seen within a week.</div>
         <div class="opt-desc"><strong>Dr. Lawrence J. Hirsch, MD</strong> &mdash; Chief of Epilepsy &amp; EEG, Co-Director. Patient: <em>&ldquo;After seeing the &lsquo;best&rsquo; doctors, Dr. Hirsch finally got my seizures under control.&rdquo;</em></div>
-        <div class="opt-desc"><strong>Appointment:</strong> <a href="tel:+18779253637" class="phone">1-877-925-3637</a> &middot; <a href="https://medicine.yale.edu/neurology/epilepsy" target="_blank">medicine.yale.edu/neurology</a></div>
+        <div class="opt-desc"><strong>Appointment:</strong> <a href="tel:+18779253637" class="phone">1-877-925-3637</a> &middot; <a href="https://medicine.yale.edu/neurology" target="_blank">medicine.yale.edu/neurology</a></div>
       </div>
       <div class="opt-meta">
         <div><span class="meta-label">Cost</span><div class="badges"><span class="badge b-gold">Varies by visit</span></div></div>
@@ -288,7 +288,7 @@
   <div class="col-hdr"><span>Option</span><span>Cost</span><span>Insurance</span></div>
   <div class="options">
 
-    <div class="opt first">
+    <div class="opt">
       <div class="opt-body">
         <div class="opt-header"><div class="opt-n">1</div><div class="opt-icon">🤝</div><div class="opt-titles"><div class="opt-title">Epilepsy Foundation of Connecticut</div><div class="opt-tag">Serves Hartford County Including Bloomfield</div></div></div>
         <ul class="opt-list">
@@ -326,14 +326,14 @@
   <div class="col-hdr"><span>Option</span><span>Cost</span><span>Insurance</span></div>
   <div class="options">
 
-    <div class="opt first">
+    <div class="opt">
       <div class="opt-body">
         <div class="opt-header"><div class="opt-n">1</div><div class="opt-icon">🐾</div><div class="opt-titles"><div class="opt-title">Seizure Response Dog</div><div class="opt-tag">Waitlists Are 6&ndash;24 Months &mdash; Apply Now</div></div></div>
         <div class="opt-desc">Trained to stay beside Gio during a seizure, activate alert devices, retrieve a phone, or find family. Some can alert before a seizure starts.</div>
         <ul class="opt-list">
           <li><strong>Little Angels Service Dogs</strong> &mdash; New England &middot; <a href="https://www.littleangelsservicedogs.org" target="_blank">littleangelsservicedogs.org</a></li>
           <li><strong>Helper Hounds CT</strong> &mdash; Connecticut &middot; <a href="https://www.helperhoundsct.com" target="_blank">helperhoundsct.com</a></li>
-          <li><strong>Canines 4 Hope</strong> &mdash; pre-trained dogs placed in 3&ndash;6 months &middot; <a href="https://www.canines4hope.org" target="_blank">canines4hope.org</a></li>
+          <li><strong>Epilepsy Foundation CT</strong> <strong>Canines 4 Hope</strong> &mdash; pre-trained dogs placed in 3&ndash;6 months &middot; <a href="https://epilepsyct.com/seizure-response-dogs" target="_blank">epilepsyct.com/seizure-response-dogs</a>mdash; vetted list of seizure response dog organizations <strong>Canines 4 Hope</strong> &mdash; pre-trained dogs placed in 3&ndash;6 months &middot; <a href="https://epilepsyct.com/seizure-response-dogs" target="_blank">epilepsyct.com/seizure-response-dogs</a>middot; <a href="https://epilepsyct.com/seizure-response-dogs" target="_blank">epilepsyct.com/seizure-response-dogs</a></li>
         </ul>
       </div>
       <div class="opt-meta">
@@ -347,7 +347,7 @@
   <!-- RESOURCES -->
   <div class="resources">
     <div class="res-title">Key Resources at a Glance</div>
-    <div class="res-item"><div class="res-name">Yale Comprehensive Epilepsy Center</div><div class="res-url"><a href="tel:+18779253637">1-877-925-3637</a> &middot; <a href="https://medicine.yale.edu/neurology/epilepsy" target="_blank">medicine.yale.edu/neurology</a></div></div>
+    <div class="res-item"><div class="res-name">Yale Comprehensive Epilepsy Center</div><div class="res-url"><a href="tel:+18779253637">1-877-925-3637</a> &middot; <a href="https://medicine.yale.edu/neurology" target="_blank">medicine.yale.edu/neurology</a></div></div>
     <div class="res-item"><div class="res-name">MGH Epilepsy Program (Dr. Andrew Cole)</div><div class="res-url"><a href="https://www.massgeneral.org/neurology" target="_blank">massgeneral.org/neurology</a></div></div>
     <div class="res-item"><div class="res-name">Hartford HealthCare Ayer Neuroscience</div><div class="res-url"><a href="tel:+18609723621">(860) 972-3621</a> &middot; <a href="https://maps.google.com/?q=85+Seymour+St+Hartford+CT" target="_blank">85 Seymour St, Hartford CT</a></div></div>
     <div class="res-item"><div class="res-name">Epilepsy Foundation of Connecticut</div><div class="res-url"><a href="https://epilepsyct.com" target="_blank">epilepsyct.com</a></div></div>
@@ -364,5 +364,37 @@
   <div class="footer">Prepared with love for Gio and the Cuevas family &nbsp;&middot;&nbsp; Bloomfield, Connecticut &nbsp;&middot;&nbsp; April 2026</div>
 
 </div>
+<script>
+  const opts = document.querySelectorAll('.opt');
+  let current = null;
+
+  function updateActive() {
+    let closest = null;
+    let closestDist = Infinity;
+    const mid = window.innerHeight / 2;
+
+    opts.forEach(opt => {
+      const rect = opt.getBoundingClientRect();
+      const center = rect.top + rect.height / 2;
+      const dist = Math.abs(center - mid);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closest = opt;
+      }
+    });
+
+    if (closest && closest !== current) {
+      if (current) current.classList.remove('active');
+      closest.classList.add('active');
+      current = closest;
+    }
+  }
+
+  // Set first one active on load
+  if (opts.length) { opts[0].classList.add('active'); current = opts[0]; }
+
+  window.addEventListener('scroll', updateActive, { passive: true });
+  updateActive();
+</script>
 </body>
 </html>
