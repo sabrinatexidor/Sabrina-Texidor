@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Gio — Cuevas Family</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#1a2340;--teal:#2a7d7b;--teal-mid:#4a9d9b;--teal-pale:#e4f2f1;
+    --teal-border:#b0d4d3;--cream:#faf8f4;--white:#ffffff;--border:#e0d9d0;
+    --text:#1c1c2e;--muted:#6b7280;--muted-light:#9ca3af;--slate:#4b5563;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .page{max-width:680px;margin:0 auto;padding:40px 20px 60px;}
+
+  .header{text-align:center;padding-bottom:24px;border-bottom:2px solid var(--navy);margin-bottom:28px;}
+  .eyebrow{font-size:10px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+  h1{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;color:var(--navy);line-height:1;}
+  h1 em{font-style:italic;color:var(--teal);}
+  .header-meta{font-size:13px;color:var(--muted);margin-top:10px;}
+
+  .note{background:var(--navy);padding:26px 26px 26px 38px;border-radius:2px;margin-bottom:32px;position:relative;overflow:hidden;}
+  .note::before{content:'\201C';font-family:'Cormorant Garamond',serif;font-size:100px;color:rgba(255,255,255,.07);position:absolute;top:-18px;left:12px;line-height:1;pointer-events:none;}
+  .note p{font-size:15px;line-height:1.85;color:#c8d4e8;position:relative;z-index:1;}
+  .note strong{color:#e8f0ff;font-weight:500;}
+
+  .section-label{font-size:9px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  .guides{display:flex;flex-direction:column;gap:10px;}
+
+  .guide{border-radius:2px;overflow:hidden;border:1px solid var(--border);text-decoration:none;display:block;transition:transform .15s;}
+  .guide:hover{transform:translateY(-2px);}
+
+  .guide-banner{padding:24px 20px;display:flex;align-items:center;gap:16px;}
+  .guide-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1;opacity:.25;color:white;}
+  .guide-info{flex:1;}
+  .guide-label{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:5px;}
+  .guide-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:white;line-height:1.2;}
+  .guide-title em{font-style:italic;}
+  .guide-subtitle{font-size:12.5px;margin-top:5px;opacity:.7;}
+
+  .guide-body{background:var(--white);padding:14px 18px;}
+  .guide-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--slate);}
+  .guide-item:last-child{border-bottom:none;}
+  .guide-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;background:var(--teal);}
+  .guide-arrow{margin-left:auto;color:var(--muted-light);font-size:12px;}
+
+  .guide-cta{display:flex;align-items:center;justify-content:space-between;padding:15px 20px;font-size:14px;font-weight:500;}
+
+  .g1 .guide-banner{background:var(--navy);}
+  .g1 .guide-label{color:#4a9d9b;}
+  .g1 .guide-subtitle{color:#8a9ab8;}
+  .g1 .guide-cta{background:#f0f8f8;color:var(--navy);border-top:1px solid var(--teal-pale);}
+  .g1 .guide-cta span:last-child{color:var(--teal);}
+
+  .g2 .guide-banner{background:var(--teal);}
+  .g2 .guide-label{color:rgba(255,255,255,.7);}
+  .g2 .guide-subtitle{color:rgba(255,255,255,.65);}
+  .g2 .guide-cta{background:#f0f8f8;color:var(--teal);border-top:1px solid var(--teal-pale);}
+  .g2 .guide-cta span:last-child{color:var(--teal);}
+
+  .footer{text-align:center;font-size:12px;color:var(--muted-light);font-style:italic;padding-top:24px;border-top:1px solid var(--border);margin-top:32px;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="eyebrow">Seizure Safety & Support</div>
+    <h1>For <em>Gio</em></h1>
+    <div class="header-meta">Bloomfield, Connecticut &nbsp;&middot;&nbsp; April 2026</div>
+  </div>
+
+  <div class="note">
+    <p>Cuevas family &mdash; we are here for you. We&rsquo;ve created two guides for Gio &mdash; one covering <strong>monitoring devices, specialist epilepsy centers, and FDA-approved treatments</strong>, and one covering <strong>holistic and integrative support for the mind, body, and nervous system</strong>. We see how hard you work every day to keep Gio well and we want you to know you are not alone in this. Together we&rsquo;ve got this &mdash; Gio deserves to live his best life.</p>
+  </div>
+
+  <div class="section-label">Two guides — choose where to start</div>
+
+  <div class="guides">
+
+    <a href="gio-guide.html" class="guide g1">
+      <div class="guide-banner">
+        <div class="guide-num">1</div>
+        <div class="guide-info">
+          <div class="guide-label">By Sabrina &nbsp;&middot;&nbsp; Medical & Safety Guide</div>
+          <div class="guide-title">Devices, Doctors & <em>Treatments</em></div>
+          <div class="guide-subtitle">Monitoring devices · Specialist centers · FDA-approved options · Insurance</div>
+        </div>
+      </div>
+      <div class="guide-body">
+        <div class="guide-item"><span class="guide-dot"></span>Wearable alerts & nighttime monitors<span class="guide-arrow">→</span></div>
+        <div class="guide-item"><span class="guide-dot"></span>Yale · MGH · Hartford HealthCare<span class="guide-arrow">→</span></div>
+        <div class="guide-item"><span class="guide-dot"></span>VNS, RNS, DBS & Ketogenic Diet<span class="guide-arrow">→</span></div>
+        <div class="guide-item"><span class="guide-dot"></span>Insurance, cost & Connecticut resources<span class="guide-arrow">→</span></div>
+      </div>
+      <div class="guide-cta"><span>Open Medical Guide</span><span>→</span></div>
+    </a>
+
+    <a href="gio-guide-holistic.html" class="guide g2">
+      <div class="guide-banner">
+        <div class="guide-num">2</div>
+        <div class="guide-info">
+          <div class="guide-label">By Kayla &nbsp;&middot;&nbsp; Holistic & Integrative Guide</div>
+          <div class="guide-title">Mind, Body & <em>Nervous System</em></div>
+          <div class="guide-subtitle">Sleep · Stress · Supplements · Therapy · Integrative practitioners</div>
+        </div>
+      </div>
+      <div class="guide-body">
+        <div class="guide-item"><span class="guide-dot"></span>Sleep, stress & daily nervous system support<span class="guide-arrow">→</span></div>
+        <div class="guide-item"><span class="guide-dot"></span>Supplements — Omega-3, Magnesium, CBD & more<span class="guide-arrow">→</span></div>
+        <div class="guide-item"><span class="guide-dot"></span>Therapy — EMDR, somatic, ACT & support groups<span class="guide-arrow">→</span></div>
+        <div class="guide-item"><span class="guide-dot"></span>Naturopathic doctors & medical intuitives<span class="guide-arrow">→</span></div>
+      </div>
+      <div class="guide-cta"><span>Open Holistic Guide</span><span>→</span></div>
+    </a>
+
+  </div>
+
+  <div class="footer">
+    Made with love for Gio and the Cuevas family &nbsp;&middot;&nbsp; Bloomfield, Connecticut &nbsp;&middot;&nbsp; April 2026
+  </div>
+
+</div>
+</body>
+</html>
