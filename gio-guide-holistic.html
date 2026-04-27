@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Holistic Guide for Gio — Cuevas Family</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#1a2340;--teal:#2a7d7b;--teal-mid:#4a9d9b;--teal-pale:#e4f2f1;
+    --teal-border:#b0d4d3;--gold:#a07820;--gold-pale:#fdf6e8;--gold-border:#e8d4a0;
+    --green:#276130;--green-pale:#edf7ee;--green-border:#b8d8bc;
+    --rose:#b03020;--rose-pale:#fdf0ee;--rose-border:#f0c0bc;
+    --cream:#faf8f4;--white:#ffffff;--border:#e0d9d0;
+    --text:#1c1c2e;--muted:#6b7280;--muted-light:#9ca3af;--slate:#4b5563;
+    --warm-teal:#3d9b8a;--warm-teal-pale:#e8f5f2;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .page{max-width:680px;margin:0 auto;padding:36px 20px 60px;}
+
+  /* HEADER */
+  .header{padding-bottom:28px;border-bottom:2px solid var(--navy);margin-bottom:28px;text-align:center;}
+  .header h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:var(--navy);line-height:1.1;margin-bottom:8px;}
+  .header h1 em{font-style:italic;color:var(--teal);}
+  .header-sub{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--teal);font-style:italic;margin-bottom:12px;}
+  .header-meta{font-size:13px;color:var(--muted);line-height:1.8;}
+
+  /* COMPANION LINK */
+  .companion{display:flex;align-items:center;gap:10px;background:var(--navy);padding:14px 20px;border-radius:2px;margin-bottom:28px;text-decoration:none;}
+  .companion-text{flex:1;}
+  .companion-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#a8d8d7;font-weight:600;margin-bottom:2px;}
+  .companion-name{font-size:15px;color:white;font-weight:400;}
+  .companion-arrow{color:var(--teal-mid);font-size:18px;}
+
+  /* NOTE */
+  .note{background:var(--navy);padding:24px 24px 24px 36px;border-radius:2px;margin-bottom:28px;position:relative;overflow:hidden;}
+  .note::before{content:'\201C';font-family:'Cormorant Garamond',serif;font-size:100px;color:rgba(255,255,255,.07);position:absolute;top:-18px;left:12px;line-height:1;pointer-events:none;}
+  .note p{font-size:15px;line-height:1.85;color:#c8d4e8;position:relative;z-index:1;}
+  .note strong{color:#e8f0ff;font-weight:500;}
+
+  /* TOC */
+  .toc{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--teal);padding:20px 22px;margin-bottom:28px;border-radius:1px;}
+  .toc-title{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;}
+  .toc-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);text-decoration:none;color:var(--text);}
+  .toc-item:last-child{border-bottom:none;}
+  .toc-icon{font-size:20px;min-width:26px;text-align:center;}
+  .toc-text{flex:1;}
+  .toc-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--navy);line-height:1.2;transition:color .15s;}
+  .toc-item:hover .toc-name{color:var(--teal);}
+  .toc-subdesc{font-size:12px;color:var(--muted);margin-top:2px;}
+  .toc-arrow{font-size:13px;color:var(--teal-mid);}
+
+  /* SECTION */
+  .section{margin-top:36px;}
+  .section-header{background:var(--navy);border-left:5px solid var(--teal);padding:18px 20px;border-radius:1px;margin-bottom:2px;}
+  .section-top{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+  .section-icon{font-size:22px;}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:white;line-height:1.1;}
+  .section-title em{font-style:italic;color:#a8d8d7;}
+  .section-desc{font-size:14px;color:rgba(200,216,235,.85);line-height:1.5;}
+
+  /* CARDS */
+  .card{background:var(--white);border:1px solid var(--border);border-left:3px solid transparent;padding:20px 18px;margin-bottom:2px;transition:border-left-color .15s;}
+  .card:hover{border-left-color:var(--teal);}
+  .card.highlight{border-left-color:var(--teal);background:#f8fffe;}
+  .card-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:var(--navy);margin-bottom:4px;line-height:1.2;}
+  .card-tag{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+  .card-body{font-size:14.5px;color:var(--slate);line-height:1.75;margin-bottom:6px;}
+  .card-body+.card-body{margin-top:6px;}
+  .card-list{list-style:none;margin:8px 0;padding:0;}
+  .card-list li{font-size:14px;color:var(--slate);line-height:1.65;padding:4px 0 4px 16px;position:relative;}
+  .card-list li::before{content:'→';position:absolute;left:0;color:var(--teal);font-size:11px;top:6px;}
+  .card-note{font-size:13px;color:var(--muted);font-style:italic;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
+
+  /* ALERT BOX */
+  .alert{background:var(--gold-pale);border:1px solid var(--gold-border);border-left:4px solid var(--gold);padding:16px 18px;margin-bottom:2px;border-radius:1px;}
+  .alert-title{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .alert-body{font-size:14px;color:#5a4010;line-height:1.7;}
+  .alert-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+  .alert-tag{font-size:12px;font-weight:600;background:var(--gold);color:white;padding:4px 10px;border-radius:12px;}
+
+  /* LINK CARDS */
+  .link-card{display:flex;align-items:center;gap:14px;background:var(--white);border:1px solid var(--border);padding:14px 16px;margin-bottom:2px;text-decoration:none;transition:border-color .15s;}
+  .link-card:hover{border-color:var(--teal);}
+  .link-card-text{flex:1;}
+  .link-card-name{font-size:15px;font-weight:500;color:var(--navy);margin-bottom:2px;}
+  .link-card-url{font-size:12.5px;color:var(--teal);}
+  .link-card-arrow{color:var(--teal-mid);font-size:16px;}
+
+  /* BADGES */
+  .badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;}
+  .badge{display:inline-block;font-size:12px;font-weight:400;padding:4px 9px;border-radius:2px;line-height:1.4;}
+  .b-gold{background:var(--gold-pale);color:var(--gold);border:1px solid var(--gold-border);}
+  .b-teal{background:var(--teal-pale);color:var(--teal);border:1px solid var(--teal-border);}
+  .b-green{background:var(--green-pale);color:var(--green);border:1px solid var(--green-border);}
+  .b-muted{background:#f8f8f8;color:#9ca3af;border:1px solid #e8e8e8;}
+
+  /* NAV */
+  .cat-nav{display:flex;justify-content:space-between;align-items:center;padding:10px 2px;margin-top:6px;margin-bottom:20px;gap:10px;}
+  .nav-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--teal);text-decoration:none;padding:7px 14px;border:1px solid var(--teal-border);border-radius:20px;background:var(--white);transition:background .15s,color .15s;white-space:nowrap;}
+  .nav-btn:hover{background:var(--teal);color:white;border-color:var(--teal);}
+  .nav-btn.solo{margin-left:auto;}
+
+  /* RESOURCES */
+  .resources{background:var(--navy);padding:30px 24px;border-radius:1px;margin-top:36px;margin-bottom:32px;}
+  .res-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:white;margin-bottom:20px;}
+  .res-item{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+  .res-item:last-child{border-bottom:none;}
+  .res-name{font-size:14px;color:#d4dff0;margin-bottom:3px;}
+  .res-url a{font-size:12.5px;color:var(--teal-mid);text-decoration:none;}
+
+  a{color:var(--teal);text-decoration:none;font-weight:500;}
+  a:hover{text-decoration:underline;}
+  .card{transition:border-left-color 0.25s, background 0.25s;}
+  .card.active{border-left-color:var(--teal) !important;background:#f8fffe !important;}
+  .footer{text-align:center;font-size:12px;color:var(--muted-light);font-style:italic;padding-top:20px;border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+<div class="page" id="top">
+
+  <div class="header">
+    <div class="header-sub">Supporting Gio —</div>
+    <h1>Mind, Body & <em>Nervous System</em></h1>
+    <div class="header-meta">A holistic companion guide &nbsp;·&nbsp; April 2026</div>
+  </div>
+
+  <!-- COMPANION LINK -->
+  <a href="gio-guide.html" class="companion">
+    <div class="companion-text">
+      <div class="companion-label">Companion Document</div>
+      <div class="companion-name">View the Medical & Safety Guide →</div>
+    </div>
+    <span class="companion-arrow">⟶</span>
+  </a>
+
+  <!-- NOTE -->
+  <div class="note">
+    <p>This guide was put together with so much love by Kayla for Gio and the Cuevas family. It's a holistic companion to the medical guide — focusing on the everyday things that can support Gio's nervous system, sleep, stress levels, and overall wellbeing. Always review supplements and significant lifestyle changes with his doctor first.</p>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-title">Jump to a Section</div>
+    <a href="#foundations" class="toc-item">
+      <span class="toc-icon">🌿</span>
+      <span class="toc-text"><div class="toc-name">Daily Foundations</div><div class="toc-subdesc">Sleep, stress, movement, blood sugar, screen time</div></span>
+      <span class="toc-arrow">→</span>
+    </a>
+    <a href="#tracking" class="toc-item">
+      <span class="toc-icon">📊</span>
+      <span class="toc-text"><div class="toc-name">Tracking & Pattern Mapping</div><div class="toc-subdesc">Map the 24–72 hours before a seizure</div></span>
+      <span class="toc-arrow">→</span>
+    </a>
+    <a href="#supplements" class="toc-item">
+      <span class="toc-icon">💊</span>
+      <span class="toc-text"><div class="toc-name">Supplements Worth Exploring</div><div class="toc-subdesc">Omega-3, Magnesium, CBD, Vitamin D and more</div></span>
+      <span class="toc-arrow">→</span>
+    </a>
+    <a href="#nervous" class="toc-item">
+      <span class="toc-icon">🧘</span>
+      <span class="toc-text"><div class="toc-name">Nervous System & Stress</div><div class="toc-subdesc">Body scan, orienting, predictability, regulation</div></span>
+      <span class="toc-arrow">→</span>
+    </a>
+    <a href="#therapy" class="toc-item">
+      <span class="toc-icon">💬</span>
+      <span class="toc-text"><div class="toc-name">Therapy & Emotional Support</div><div class="toc-subdesc">Trauma-informed CBT, EMDR, somatic work, support groups</div></span>
+      <span class="toc-arrow">→</span>
+    </a>
+    <a href="#naturopathic" class="toc-item">
+      <span class="toc-icon">🌱</span>
+      <span class="toc-text"><div class="toc-name">Naturopathic Doctors</div><div class="toc-subdesc">Specialists in neurology and chronic conditions</div></span>
+      <span class="toc-arrow">→</span>
+    </a>
+    <a href="#intuitive" class="toc-item">
+      <span class="toc-icon">✨</span>
+      <span class="toc-text"><div class="toc-name">Medical Intuitives</div><div class="toc-subdesc">Identifying emotional and energetic components</div></span>
+      <span class="toc-arrow">→</span>
+    </a>
+    <a href="#devices" class="toc-item">
+      <span class="toc-icon">💍</span>
+      <span class="toc-text"><div class="toc-name">Tracking Devices</div><div class="toc-subdesc">Oura Ring and other wellness trackers</div></span>
+      <span class="toc-arrow">→</span>
+    </a>
+  </div>
+
+  <!-- PRIORITY ALERT -->
+  <div class="alert">
+    <div class="alert-title">⚡ The Big Five — Pay Attention to These</div>
+    <div class="alert-body">Based on what we know about Gio's history, these are the areas most worth monitoring closely. Small shifts here can have a meaningful impact on seizure frequency.</div>
+    <div class="alert-tags">
+      <span class="alert-tag">Sleep</span>
+      <span class="alert-tag">Stress Levels</span>
+      <span class="alert-tag">Blood Sugar</span>
+      <span class="alert-tag">Sensory Overload</span>
+      <span class="alert-tag">Medication Consistency</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1: DAILY FOUNDATIONS -->
+  <div class="section" id="foundations">
+    <div class="section-header">
+      <div class="section-top"><span class="section-icon">🌿</span><span class="section-title">Daily <em>Foundations</em></span></div>
+      <div class="section-desc">Simple daily habits that support the nervous system and reduce seizure triggers</div>
+    </div>
+
+    <div class="card highlight">
+      <div class="card-title">Sleep</div>
+      <div class="card-tag">Possibly the Single Most Important Factor</div>
+      <div class="card-body">Sleep deprivation is one of the most well-documented seizure triggers. Quality and consistency of sleep matters as much as quantity.</div>
+      <ul class="card-list">
+        <li><strong>Blackout curtains</strong> — eliminate light disruption during sleep</li>
+        <li><strong>No screens 60–90 minutes before bed</strong> — blue light suppresses melatonin and keeps the nervous system activated</li>
+        <li><strong>Reduce sensory overload in the bedroom</strong> — sounds, lights, clutter all affect sleep quality</li>
+        <li><strong>Consistent bedtime and wake time</strong> — predictability in sleep is key for seizure management</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Blood Sugar Stability</div>
+      <div class="card-tag">Dips in Blood Sugar Can Be a Trigger</div>
+      <div class="card-body">Keeping blood sugar stable throughout the day — through regular meals, limiting refined sugar and processed carbs, and not skipping meals — supports brain stability. This is also why the ketogenic diet (in the medical guide) has such strong evidence for epilepsy.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Caffeine & Alcohol</div>
+      <div class="card-tag">Both Are Known Nervous System Disruptors</div>
+      <div class="card-body">Both caffeine and alcohol can lower the seizure threshold. Worth honestly assessing how much is in his daily routine — coffee, energy drinks, soda — and whether reducing them makes a difference.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Daily Physical Movement</div>
+      <div class="card-tag">Even a Walk Makes a Difference</div>
+      <div class="card-body">Regular movement — even just a daily walk — reduces cortisol, improves sleep, and supports nervous system regulation. It doesn't need to be intense. Consistency matters more than intensity.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Hydration & Electrolytes</div>
+      <div class="card-tag">Simple and Often Overlooked</div>
+      <div class="card-body">Dehydration can stress the nervous system. Adding electrolytes — especially sodium, potassium, and magnesium — supports proper nerve function.</div>
+      <div class="card-body"><strong>Recommended:</strong> <a href="https://www.drinklmnt.com" target="_blank">LMNT electrolytes</a> — clean formula, no sugar, available online.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: TRACKING -->
+  <div class="cat-nav"><a href="#top" class="nav-btn">↑ Back to top</a><a href="#tracking" class="nav-btn">Next: Tracking →</a></div>
+  <div class="section" id="tracking">
+    <div class="section-header">
+      <div class="section-top"><span class="section-icon">📊</span><span class="section-title">Tracking & Pattern <em>Mapping</em></span></div>
+      <div class="section-desc">Map the 24–72 hours before a seizure to identify patterns and triggers</div>
+    </div>
+
+    <div class="card highlight">
+      <div class="card-title">The 24–72 Hour Map</div>
+      <div class="card-tag">One of the Most Valuable Things the Family Can Do</div>
+      <div class="card-body">After each seizure, look back at the 24–72 hours before it and ask: what changed? This isn't about blame — it's about pattern recognition. Over time, themes often emerge that can help predict and prevent.</div>
+      <ul class="card-list">
+        <li>How was his <strong>sleep</strong> the night before? Two nights before?</li>
+        <li>Did he eat differently — skip a meal, have more sugar, less protein?</li>
+        <li>Was <strong>stress unusually high</strong>? A conflict, a change in routine, an overwhelm?</li>
+        <li>Was he around more <strong>sensory stimulation</strong> than usual — loud environments, bright lights, crowds?</li>
+        <li>Did he miss or take his medication at a different time?</li>
+        <li>Was there more <strong>screen time</strong> than usual?</li>
+        <li>Had he been drinking less water?</li>
+      </ul>
+      <div class="card-note">Keep a simple notes app or journal entry after each seizure. Even a few bullet points builds a picture over time.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Predictable Daily Schedule</div>
+      <div class="card-tag">What He Can Control Matters</div>
+      <div class="card-body">A predictable daily rhythm — consistent wake time, meals, movement, wind-down — gives the nervous system a sense of safety and reduces the kind of dysregulation that can precede a seizure. Predictability is medicine.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: SUPPLEMENTS -->
+  <div class="cat-nav"><a href="#top" class="nav-btn">↑ Back to top</a><a href="#supplements" class="nav-btn">Next: Supplements →</a></div>
+  <div class="section" id="supplements">
+    <div class="section-header">
+      <div class="section-top"><span class="section-icon">💊</span><span class="section-title">Supplements Worth <em>Exploring</em></span></div>
+      <div class="section-desc">Always review with his neurologist first — some supplements interact with anti-seizure medications</div>
+    </div>
+
+    <div class="alert" style="margin-bottom:8px;">
+      <div class="alert-title">⚠️ Important</div>
+      <div class="alert-body">Some supplements — especially CBD and high-dose Omega-3 — can interact with anti-seizure medications. Review all of these with his neurologist before starting.</div>
+    </div>
+
+    <div class="card highlight">
+      <div class="card-title">Magnesium L-Threonate</div>
+      <div class="card-tag">The Most Neurologically Active Form of Magnesium</div>
+      <div class="card-body">Magnesium plays a critical role in nerve function and brain excitability. L-Threonate is the form that crosses the blood-brain barrier most effectively, making it the most relevant for neurological support. Many people with epilepsy are deficient in magnesium.</div>
+      <div class="badges"><span class="badge b-teal">Review with neurologist</span><span class="badge b-green">Well-tolerated by most</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Omega-3 Fatty Acids</div>
+      <div class="card-tag">Anti-Inflammatory, Brain-Supportive</div>
+      <div class="card-body">Omega-3s support brain health and have anti-inflammatory properties. Some research suggests they may reduce seizure frequency. Fish oil or algae-based Omega-3 are both good sources.</div>
+      <div class="badges"><span class="badge b-teal">Review with neurologist</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Vitamin D</div>
+      <div class="card-tag">Deficiency Is Common & Worth Testing</div>
+      <div class="card-body">Vitamin D deficiency is common and associated with increased seizure activity. A simple blood test can check his levels. Supplementing if deficient is low-risk and potentially meaningful.</div>
+      <div class="badges"><span class="badge b-green">Ask neurologist to test levels</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">CBD (Cannabidiol)</div>
+      <div class="card-tag">FDA-Approved Form Exists — Worth a Conversation</div>
+      <div class="card-body">CBD has well-documented anti-seizure properties — in fact, an FDA-approved CBD medication called Epidiolex exists specifically for drug-resistant epilepsy. Over-the-counter CBD products vary widely in quality. This is one to have an explicit conversation with his neurologist about, not to start independently.</div>
+      <div class="badges"><span class="badge b-teal">Ask neurologist about Epidiolex</span><span class="badge b-muted">OTC products vary in quality</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Melatonin</div>
+      <div class="card-tag">For Sleep Quality — Low Dose, Consistent Timing</div>
+      <div class="card-body">Melatonin can help regulate sleep cycles, particularly if his sleep onset is inconsistent. Low doses (0.5–1mg) taken 30–60 minutes before bed are most effective. Higher doses aren't necessarily better.</div>
+      <div class="badges"><span class="badge b-green">Generally safe — review with doctor</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Ketogenic Diet & Keto Chow</div>
+      <div class="card-tag">High Fat, Moderate Protein, Low Carb — Strong Evidence for Epilepsy</div>
+      <div class="card-body">The ketogenic diet changes how the brain uses fuel — instead of glucose, it runs on ketones, which have a stabilizing effect on brain activity. It has over 100 years of clinical use for epilepsy and strong evidence for drug-resistant cases. Studies show more than 50% of people who try it see a meaningful reduction in seizures.</div>
+      <div class="card-body">As a starting point for exploring how this way of eating feels, <a href="https://www.ketochow.xyz" target="_blank">Keto Chow shakes</a> are a delicious, nutritionally complete meal replacement that fits a ketogenic macronutrient profile — a low-barrier way to experiment with how the body responds to ketones before committing to the full dietary therapy.</div>
+      <div class="card-body"><strong>For the full medical version:</strong> Yale and Boston Children's Hospital both have dedicated adult ketogenic diet programs supervised by a neurologist and dietitian. See the medical guide for details.</div>
+      <div class="card-note">The full ketogenic diet as a medical therapy is not a DIY approach — it requires medical supervision. But exploring keto-friendly eating as a starting point is low risk and worth trying.</div>
+      <div class="badges">
+        <span class="badge b-teal">Discuss full keto with neurologist</span>
+        <span class="badge b-green">Keto Chow available online</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: NERVOUS SYSTEM -->
+  <div class="cat-nav"><a href="#top" class="nav-btn">↑ Back to top</a><a href="#nervous" class="nav-btn">Next: Nervous System →</a></div>
+  <div class="section" id="nervous">
+    <div class="section-header">
+      <div class="section-top"><span class="section-icon">🧘</span><span class="section-title">Nervous System & <em>Stress</em></span></div>
+      <div class="section-desc">Stress regulation is major — possibly the most underestimated factor in seizure management</div>
+    </div>
+
+    <div class="card highlight">
+      <div class="card-title">Stress Is Major</div>
+      <div class="card-tag">The Nervous System Needs Tools — Not Just Awareness</div>
+      <div class="card-body">When Gio is stressed, his nervous system needs go-to practices to regulate — not just the awareness that he's stressed, but actual tools he can use in the moment. The goal is to move from fight/flight activation back toward a settled state. These don't need to be elaborate.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Body Scan</div>
+      <div class="card-tag">A Simple, Powerful Regulation Tool</div>
+      <div class="card-body">A body scan is simply the practice of slowly moving attention through different parts of the body — noticing how each part feels without trying to change anything. This brings the nervous system out of its head and into the present moment. It can be done in 3 minutes lying down or sitting.</div>
+      <div class="card-note">Apps like Insight Timer have free guided body scans. This is a good starting point.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Orienting to the Room</div>
+      <div class="card-tag">A Somatic Grounding Technique</div>
+      <div class="card-body">When the nervous system is activated, slowly looking around the room and noticing specific details — what's on the wall, the colors, the textures, the smells — signals to the brain that the environment is safe. This is a technique from somatic therapy and it works precisely because it's so simple.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Understanding the Flight/Fight Response</div>
+      <div class="card-tag">His Nervous System Has Been in High Alert Since Childhood</div>
+      <div class="card-body">Gio's seizures began in childhood — which means his nervous system has been navigating this for his entire developmental period. As a result, his fight/flight response may be chronically activated, even subtly. It can also be hard to trust your own body when it has felt unpredictable for years. This is not a character flaw — it's a physiological adaptation. Nervous system work is about gradually building a felt sense of safety.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: THERAPY -->
+  <div class="cat-nav"><a href="#top" class="nav-btn">↑ Back to top</a><a href="#therapy" class="nav-btn">Next: Therapy →</a></div>
+  <div class="section" id="therapy">
+    <div class="section-header">
+      <div class="section-top"><span class="section-icon">💬</span><span class="section-title">Therapy & Emotional <em>Support</em></span></div>
+      <div class="section-desc">Processing the emotional and psychological impact of living with epilepsy since childhood</div>
+    </div>
+
+    <div class="card highlight">
+      <div class="card-title">Why Therapy?</div>
+      <div class="card-tag">This Isn't About Something Being Wrong — It's About What He's Been Through</div>
+      <div class="card-body">For many people with chronic conditions that began in childhood, there is a psychological and nervous system dimension that deserves its own attention. Gio has been navigating seizures his entire life — which shapes identity, sense of control, trust in the body, and family dynamics in ways that aren't always visible. Therapy isn't about fixing something broken. It's about having a space to process all of it.</div>
+      <div class="card-body">Key themes worth exploring: <strong>sense of safety</strong>, <strong>trust in his own body</strong>, <strong>self-regulation</strong>, <strong>medical trauma</strong>, and the emotional impact on the family system.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Trauma-Informed CBT</div>
+      <div class="card-tag">Cognitive Behavioral Therapy with a Trauma Lens</div>
+      <div class="card-body">Traditional CBT focuses on the relationship between thoughts, feelings, and behaviors. Trauma-informed CBT adapts this approach to account for how trauma and chronic stress shape those patterns — particularly relevant for someone whose nervous system has been impacted from early childhood.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Somatic Therapy — EMDR, ART, Brainspotting, Neurofeedback</div>
+      <div class="card-tag">Body-Based Approaches to Trauma Processing</div>
+      <div class="card-body">Somatic therapies work directly with the body's stored stress responses — not just the mind. These are particularly effective for people whose nervous systems have been chronically activated.</div>
+      <ul class="card-list">
+        <li><strong>EMDR</strong> — Eye Movement Desensitization and Reprocessing. Widely used for trauma, helps the brain process stuck experiences.</li>
+        <li><strong>ART (Accelerated Resolution Therapy)</strong> — uses eye movements and imagery to reprocess distressing memories quickly.</li>
+        <li><strong>Brainspotting</strong> — uses eye position to access and process trauma stored in the subcortical brain.</li>
+        <li><strong>Neurofeedback</strong> — trains the brain to regulate its own electrical activity. Has specific evidence for epilepsy as well as trauma.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ACT — Acceptance and Commitment Therapy</div>
+      <div class="card-tag">Learning to Live Fully Alongside a Chronic Condition</div>
+      <div class="card-body">ACT is particularly well-suited for chronic conditions. Rather than fighting or trying to eliminate difficult experiences, it focuses on building psychological flexibility — the ability to move toward what matters even when things are hard. Very relevant for someone managing epilepsy long-term.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Support Group</div>
+      <div class="card-tag">Meeting People Who Actually Understand</div>
+      <div class="card-body">There is something uniquely valuable about honest, vulnerable conversations with people who share the same lived experience. A seizure-specific support group — in person or online — can reduce isolation and provide a kind of understanding that even the most loving family can't fully provide.</div>
+      <div class="card-body"><strong>Find one:</strong> <a href="https://epilepsyct.com" target="_blank">Epilepsy Foundation CT</a> hosts support groups and can connect Gio to others in his area.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: NATUROPATHIC -->
+  <div class="cat-nav"><a href="#top" class="nav-btn">↑ Back to top</a><a href="#naturopathic" class="nav-btn">Next: Naturopathic Docs →</a></div>
+  <div class="section" id="naturopathic">
+    <div class="section-header">
+      <div class="section-top"><span class="section-icon">🌱</span><span class="section-title">Naturopathic <em>Doctors</em></span></div>
+      <div class="section-desc">Specialists in neurology and chronic conditions — ideally working alongside his medical team</div>
+    </div>
+
+    <div class="card highlight">
+      <div class="card-title">The Hope</div>
+      <div class="card-tag">Integrative Care, Not Either/Or</div>
+      <div class="card-body">A naturopathic doctor who specializes in neurological and chronic conditions ideally works as part of a team with his medical doctors — not as a replacement. The goal is a fuller picture of what's happening in his body and what might support it.</div>
+    </div>
+
+    <a href="http://brianjhenningernd.com/" target="_blank" class="link-card">
+      <div class="link-card-text">
+        <div class="link-card-name">Brian J. Henninger, ND</div>
+        <div class="link-card-url">brianjhenningernd.com</div>
+      </div>
+      <span class="link-card-arrow">→</span>
+    </a>
+
+    <a href="https://www.drnicoleklughers.net/" target="_blank" class="link-card">
+      <div class="link-card-text">
+        <div class="link-card-name">Dr. Nicole Klughers, ND</div>
+        <div class="link-card-url">drnicoleklughers.net</div>
+      </div>
+      <span class="link-card-arrow">→</span>
+    </a>
+
+    <a href="https://draieta.com/" target="_blank" class="link-card">
+      <div class="link-card-text">
+        <div class="link-card-name">Dr. Aieta</div>
+        <div class="link-card-url">draieta.com</div>
+      </div>
+      <span class="link-card-arrow">→</span>
+    </a>
+  </div>
+
+  <!-- SECTION 7: MEDICAL INTUITIVE -->
+  <div class="cat-nav"><a href="#top" class="nav-btn">↑ Back to top</a><a href="#intuitive" class="nav-btn">Next: Medical Intuitives →</a></div>
+  <div class="section" id="intuitive">
+    <div class="section-header">
+      <div class="section-top"><span class="section-icon">✨</span><span class="section-title">Medical <em>Intuitives</em></span></div>
+      <div class="section-desc">Identifying emotional and energetic layers that may be contributing</div>
+    </div>
+
+    <div class="card highlight">
+      <div class="card-title">What Is a Medical Intuitive?</div>
+      <div class="card-tag">Nothing Is Ever Just Physical</div>
+      <div class="card-body">Medical intuitives work to identify underlying emotional, energetic, and spiritual layers of a condition — the view being that nothing is ever purely physical. This is a complementary approach, not a medical one. Worth exploring with an open mind alongside everything else.</div>
+    </div>
+
+    <a href="https://catherinecarrigan.com/medical-intuitive-connecticut/" target="_blank" class="link-card">
+      <div class="link-card-text">
+        <div class="link-card-name">Catherine Carrigan — Medical Intuitive (Connecticut)</div>
+        <div class="link-card-url">catherinecarrigan.com</div>
+      </div>
+      <span class="link-card-arrow">→</span>
+    </a>
+
+    <a href="https://easternhealingarts.com/medical-intuitive-energy-healer" target="_blank" class="link-card">
+      <div class="link-card-text">
+        <div class="link-card-name">Eastern Healing Arts — Medical Intuitive & Energy Healer</div>
+        <div class="link-card-url">easternhealingarts.com</div>
+      </div>
+      <span class="link-card-arrow">→</span>
+    </a>
+  </div>
+
+  <!-- SECTION 8: DEVICES -->
+  <div class="cat-nav"><a href="#top" class="nav-btn">↑ Back to top</a><a href="#devices" class="nav-btn">Next: Tracking Devices →</a></div>
+  <div class="section" id="devices">
+    <div class="section-header">
+      <div class="section-top"><span class="section-icon">💍</span><span class="section-title">Tracking <em>Devices</em></span></div>
+      <div class="section-desc">Wearables that track sleep, stress, and recovery alongside seizure monitoring</div>
+    </div>
+
+    <div class="card highlight">
+      <div class="card-title">Oura Ring</div>
+      <div class="card-tag">Tracks Sleep, HRV, Stress & Recovery — FSA/HSA Eligible</div>
+      <div class="card-body">The Oura Ring is a wellness tracking ring worn on the finger that monitors sleep quality, heart rate variability (HRV), body temperature, activity, and recovery. Several people with epilepsy have found it valuable — both for tracking patterns and for understanding how stress and sleep affect their overall state. It comes in silver, gold, and black.</div>
+      <div class="card-body">While not a medical seizure detector, it can be a powerful tool for the 24–72 hour pattern mapping — helping identify nights of poor sleep, elevated stress signals, or unusual recovery patterns before a seizure.</div>
+      <div class="card-body"><strong>Where:</strong> <a href="https://ouraring.com" target="_blank">ouraring.com</a></div>
+      <div class="badges">
+        <span class="badge b-teal">FSA/HSA eligible</span>
+        <span class="badge b-green">Available in multiple finishes</span>
+        <span class="badge b-gold">~$299–$349 + optional membership</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-nav"><a href="#top" class="nav-btn solo">↑ Back to top</a></div>
+
+  <!-- COMPANION LINK BOTTOM -->
+  <a href="gio-guide.html" class="companion">
+    <div class="companion-text">
+      <div class="companion-label">Also See</div>
+      <div class="companion-name">Medical & Safety Guide — Devices, Doctors, Insurance →</div>
+    </div>
+    <span class="companion-arrow">⟶</span>
+  </a>
+
+  <div class="footer">
+    Prepared with love for Gio and the Cuevas family &nbsp;&middot;&nbsp; Bloomfield, Connecticut &nbsp;&middot;&nbsp; April 2026
+  </div>
+
+</div>
+<script>
+  const cards = document.querySelectorAll('.card');
+  let current = null;
+
+  function updateActive() {
+    let closest = null;
+    let closestDist = Infinity;
+    const mid = window.innerHeight / 2;
+
+    cards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      const center = rect.top + rect.height / 2;
+      const dist = Math.abs(center - mid);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closest = card;
+      }
+    });
+
+    if (closest && closest !== current) {
+      if (current) current.classList.remove('active');
+      closest.classList.add('active');
+      current = closest;
+    }
+  }
+
+  if (cards.length) { cards[0].classList.add('active'); current = cards[0]; }
+  window.addEventListener('scroll', updateActive, { passive: true });
+  updateActive();
+</script>
+</body>
+</html>
